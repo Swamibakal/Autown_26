@@ -116,18 +116,11 @@ class _HomePageState extends State<HomePage> {
         border: Border(bottom: BorderSide(color: _scrolled ? AppColors.border : Colors.transparent)),
       ),
       child: Row(children: [
+               WilpLogo(height: mobile ? 40 : 52),
+        Container(width: 1, height: 28, margin: const EdgeInsets.symmetric(horizontal: 14), color: AppColors.border),
         InkWell(
           onTap: () => _goTo('Home'),
-          child: Row(mainAxisSize: MainAxisSize.min, children: [
-            Container(
-              width: 34,
-              height: 34,
-              decoration: BoxDecoration(gradient: brandGradient, borderRadius: BorderRadius.circular(9)),
-              child: const Icon(Icons.electric_car, color: AppColors.bg, size: 20),
-            ),
-            const SizedBox(width: 10),
-            GradientText("AUTOwn'26", style: displayStyle(20)),
-          ]),
+          child: GradientText("AUTOwn'26", style: displayStyle(20)),
         ),
         const Spacer(),
         if (!mobile)

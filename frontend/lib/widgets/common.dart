@@ -222,3 +222,33 @@ class Pill extends StatelessWidget {
     );
   }
 }
+/// BITS Pilani WILP logo (no background, sits directly on the dark theme).
+/// Clicking it opens the WILP website.
+class WilpLogo extends StatelessWidget {
+  const WilpLogo({super.key, this.height = 40});
+
+  final double height;
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        onTap: () => openUrl('https://bits-pilani-wilp.ac.in/'),
+        child: SizedBox(
+          height: height,
+          child: Image.asset(
+            'assets/images/wilp_logo.png',
+            fit: BoxFit.contain,
+            errorBuilder: (_, __, ___) => Center(
+              child: Text(
+                'BITS Pilani WILP',
+                style: bodyStyle(height * 0.32, color: Colors.white, weight: FontWeight.w800),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

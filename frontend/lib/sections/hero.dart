@@ -66,7 +66,9 @@ class _HeroSectionState extends State<HeroSection> with SingleTickerProviderStat
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Pill('BITS Pilani WILP presents', icon: Icons.school_outlined),
+                                    WilpLogo(height: mobile ? 60 : 80),
+                  const SizedBox(height: 12),
+                  Text('PRESENTS', style: bodyStyle(12, color: AppColors.cyan, weight: FontWeight.w700).copyWith(letterSpacing: 4)),
                   const SizedBox(height: 22),
                   GradientText(
                     e['name'] ?? "AUTOwn'26",

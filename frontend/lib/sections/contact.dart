@@ -192,6 +192,8 @@ class Footer extends StatelessWidget {
         border: Border(top: BorderSide(color: AppColors.border)),
       ),
       child: Column(children: [
+        const WilpLogo(height: 52),
+        const SizedBox(height: 18),
         GradientText(event['name'] ?? "AUTOwn'26", style: displayStyle(28)),
         const SizedBox(height: 8),
         Text(event['theme'] ?? '', textAlign: TextAlign.center, style: themeLineStyle(16)),
@@ -210,7 +212,7 @@ class Footer extends StatelessWidget {
         Text('© 2027 ${event['name'] ?? "AUTOwn'26"} • ${event['organiser'] ?? ''}',
             textAlign: TextAlign.center, style: bodyStyle(13)),
         const SizedBox(height: 4),
-        Text('Designed for the future of smart mobility • Built with Flutter & Python',
+        Text('Designed for the future of smart mobility • Built By Swami & Raj',
             textAlign: TextAlign.center, style: bodyStyle(12.5)),
       ]),
     );
