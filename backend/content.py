@@ -15,7 +15,7 @@ EVENT = {
     "prize_pool": "₹4,00,000",
     "registration_notice": "Competition registrations are open. Last date will be announced soon.",
     "organiser": "BITS Pilani – Work Integrated Learning Programmes (WILP)",
-    "support_email": "",  # TODO: add the official support email (hidden on the site while empty)
+    "support_email": "bitswilpautown@wilp.bits-pilani.ac.in",  # TODO: add the official support email (hidden on the site while empty)
 }
 
 VISION = {
