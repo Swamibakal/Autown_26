@@ -146,7 +146,7 @@
       "category": "Competition",
       "coordinators": [
         {
-          "names": "Dr. K. Lakshmi Prasanna",
+          "names": "Ms. K. Lakshmi Prasanna",
           "phones": [
             "8179576005"
           ]
@@ -182,7 +182,7 @@
       "category": "Competition",
       "coordinators": [
         {
-          "names": "Dr. Goutham Makena",
+          "names": "Mr. Goutham Makena",
           "phones": [
             "9951696086"
           ]
@@ -200,19 +200,19 @@
       "category": "Competition",
       "coordinators": [
         {
-          "names": "Dr. Ramya",
+          "names": "Ms. Ramya",
           "phones": [
             "7338824114"
           ]
         },
         {
-          "names": "Advaith",
+          "names": "Mr. Advaith",
           "phones": [
             "7798988205"
           ]
         },
         {
-          "names": "Balaji",
+          "names": "Mr. Balaji",
           "phones": [
             "8074150472"
           ]
@@ -230,13 +230,13 @@
       "category": "Competition",
       "coordinators": [
         {
-          "names": "Divesh",
+          "names": "Mr. Divesh",
           "phones": [
             "9811972420"
           ]
         },
         {
-          "names": "Kaaviya",
+          "names": "Ms. Kaaviya",
           "phones": [
             "7708285344"
           ]
@@ -255,7 +255,7 @@
       "track_coordinators": [
         {
           "track": "Autonomous Systems",
-          "names": "Prof. Aditya Balu; Prof. Ariful Mashud; Prof. Lakshmi Prasanna",
+          "names": "Mr. Aditya Balu; Mr. Ariful Mashud; Ms. Lakshmi Prasanna",
           "phones": [
             "8638096653",
             "8179576005"
@@ -263,7 +263,7 @@
         },
         {
           "track": "AI & Machine Learning",
-          "names": "Prof. Harish Kumar JR; Donald Johnson; Prof. Nilanjan Mukherjee",
+          "names": "Mr. Harish Kumar JR; Mr. Donald Johnson; Mr. Nilanjan Mukherjee",
           "phones": [
             "9945575205",
             "8667023141",
@@ -272,7 +272,7 @@
         },
         {
           "track": "Automotive Cybersecurity",
-          "names": "Prof. Ramya; Mr. Advait; Mr. Balaji",
+          "names": "Ms. Ramya; Mr. Advait; Mr. Balaji",
           "phones": [
             "7338824114",
             "7798988205",
@@ -281,7 +281,7 @@
         },
         {
           "track": "Electric & Hybrid Vehicles",
-          "names": "Prof. Sameer Gupta; P. Jayvardhan",
+          "names": "Mr. Sameer Gupta; Mr. P. Jayvardhan",
           "phones": [
             "9975545741",
             "8886097055"
@@ -289,7 +289,7 @@
         },
         {
           "track": "Automotive & Allied Domain",
-          "names": "Prof. Glynn John; P. Jayvardhan",
+          "names": "Mr. Glynn John; Mr. P. Jayvardhan",
           "phones": [
             "8681929774",
             "8886097055"
@@ -297,7 +297,7 @@
         },
         {
           "track": "Software-Defined Vehicles",
-          "names": "Prof. S. Raghuraman; Mr. Sivaramakrishna",
+          "names": "Mr. S. Raghuraman; Mr. Sivaramakrishna",
           "phones": [
             "8939080025",
             "8056448976"
@@ -305,7 +305,7 @@
         },
         {
           "track": "Automotive Embedded Systems",
-          "names": "Prof. Satisha; Ms. Druthi",
+          "names": "Mr. Satisha; Ms. Druthi",
           "phones": [
             "9448109798",
             "7036489878"
@@ -313,7 +313,7 @@
         },
         {
           "track": "Automotive Communication",
-          "names": "Prof. Kranthi Kumar Palavalasa; Naveen Kanuri",
+          "names": "Mr. Kranthi Kumar Palavalasa; Mr. Naveen Kanuri",
           "phones": [
             "8951157158",
             "8096375215"
@@ -333,7 +333,7 @@
       "track_coordinators": [
         {
           "track": "Autonomous Systems",
-          "names": "Prof. Aditya Balu; Prof. Ariful Mashud; Prof. Lakshmi Prasanna",
+          "names": "Mr. Aditya Balu; Mr. Ariful Mashud; Ms. Lakshmi Prasanna",
           "phones": [
             "8638096653",
             "8179576005"
@@ -341,7 +341,7 @@
         },
         {
           "track": "AI & Machine Learning",
-          "names": "Prof. Harish Kumar JR; Donald Johnson; Prof. Nilanjan Mukherjee",
+          "names": "Mr. Harish Kumar JR; Mr. Donald Johnson; Mr. Nilanjan Mukherjee",
           "phones": [
             "9945575205",
             "8667023141",
@@ -350,7 +350,7 @@
         },
         {
           "track": "Automotive Cybersecurity",
-          "names": "Prof. Ramya; Mr. Advait; Mr. Balaji",
+          "names": "Ms. Ramya; Mr. Advait; Mr. Balaji",
           "phones": [
             "7338824114",
             "7798988205",
@@ -359,7 +359,7 @@
         },
         {
           "track": "Electric & Hybrid Vehicles",
-          "names": "Prof. Sameer Gupta; P. Jayvardhan",
+          "names": "Mr. Sameer Gupta; Mr. P. Jayvardhan",
           "phones": [
             "9975545741",
             "8886097055"
@@ -367,7 +367,7 @@
         },
         {
           "track": "Automotive & Allied Domain",
-          "names": "Prof. Glynn John; P. Jayvardhan",
+          "names": "Mr. Glynn John; Mr. P. Jayvardhan",
           "phones": [
             "8681929774",
             "8886097055"
@@ -375,7 +375,7 @@
         },
         {
           "track": "Software-Defined Vehicles",
-          "names": "Prof. S. Raghuraman; Mr. Sivaramakrishna",
+          "names": "Mr. S. Raghuraman; Mr. Sivaramakrishna",
           "phones": [
             "8939080025",
             "8056448976"
@@ -383,7 +383,7 @@
         },
         {
           "track": "Automotive Embedded Systems",
-          "names": "Prof. Satisha; Ms. Druthi",
+          "names": "Mr. Satisha; Ms. Druthi",
           "phones": [
             "9448109798",
             "7036489878"
@@ -391,7 +391,7 @@
         },
         {
           "track": "Automotive Communication",
-          "names": "Prof. Kranthi Kumar Palavalasa; Naveen Kanuri",
+          "names": "Mr. Kranthi Kumar Palavalasa; Mr. Naveen Kanuri",
           "phones": [
             "8951157158",
             "8096375215"
@@ -410,7 +410,7 @@
       "category": "Workshop",
       "coordinators": [
         {
-          "names": "Prof. Goutham",
+          "names": "Mr. Goutham",
           "phones": [
             "9951696086"
           ]
@@ -428,7 +428,7 @@
       "category": "Workshop",
       "coordinators": [
         {
-          "names": "Prof. Ramya",
+          "names": "Ms. Ramya",
           "phones": [
             "7338824114"
           ]
