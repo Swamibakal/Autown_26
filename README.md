@@ -1,65 +1,49 @@
-# AUTOwn'26 Website — Flutter + Python
+# AUTOwn'26 Website (Flutter, no backend)
 
 **Theme:** *Connecting Industry Innovation with Intelligent Automotive Excellence*
-**Main event:** 13–14 February 2027 · **Prize pool:** ₹4,00,000
+**Main event:** 13–14 February 2027 · **Pre-event workshops:** 12 February 2027 · **Prize money up to ₹4,00,000**
+
+The site is a static Flutter web app. Registrations happen on **Zoho Backstage**; there is no
+backend server or database.
 
 ```
-autown26/
-├── backend/            Python (FastAPI) – content API + registrations (SQLite)
-│   ├── content.py      ← ALL website text lives here (edit this to update the site)
-│   ├── main.py         API server; also serves the Flutter build
-│   └── requirements.txt
-└── frontend/           Flutter web app
-    ├── pubspec.yaml
-    └── lib/
-        ├── main.dart               page shell, nav bar, drawer, scrolling
-        ├── api.dart                HTTP calls to the backend
-        ├── theme.dart              colours & fonts
-        ├── sections/               hero (countdown + animated road), about, tracks,
-        │                           events, speakers, schedule, sponsorship, FAQ, contact
-        └── widgets/                shared UI + registration dialog
+Dockerfile               builds the Flutter site and serves it with nginx (used by Render)
+nginx.conf.template      web server settings
+frontend/
+├── assets/content.json  ← ALL website text + Zoho Backstage links (edit this)
+├── assets/images/       logos and the 46-years badge
+└── lib/
+    ├── main.dart                 page shell, navigation
+    ├── content.dart              loads content.json
+    ├── theme.dart                brochure colours and fonts
+    ├── sections/                 hero, about, tracks, events, schedule, contact…
+    └── widgets/register_dialog.dart   Competitions / Workshop / Attendee → Zoho Backstage
 ```
 
-## 1. Run the backend
-```bash
-cd backend
-python -m venv .venv && source .venv/bin/activate      # Windows: .venv\Scripts\activate
-pip install -r requirements.txt
-uvicorn main:app --reload --port 8000
-```
-API docs: http://localhost:8000/docs
-
-## 2. Run the Flutter frontend (development)
-Requires the Flutter SDK (3.19+).
-```bash
+## Run locally
+```powershell
 cd frontend
-flutter create . --platforms web      # one-time: generates the web/ folder
 flutter pub get
-flutter run -d chrome --dart-define=API_URL=http://localhost:8000
+flutter run -d web-server --web-port 5000
 ```
+Open http://localhost:5000. (Or `flutter run -d chrome`.)
 
-## 3. Production (one server)
-```bash
-cd frontend && flutter build web --release
-cd ../backend && uvicorn main:app --host 0.0.0.0 --port 8000
-```
-The backend automatically serves `frontend/build/web` at `/`, so the site and API share one origin
-(no `API_URL` needed).
+## Connect Zoho Backstage registration
+1. In Zoho Backstage, create a ticket class for each option you want people to register for
+   (e.g. each competition, each workshop, presentations, attendee types). Use the same names as the
+   website so people can find them easily.
+2. Copy your event's registration link (the event website's Register/Tickets link, or the link that the
+   **Register Ticket** embeddable widget opens).
+3. Open `frontend/assets/content.json` and find the `"registration"` block:
+   - Paste the link into `"zoho_event_url"`. Every option uses this link by default.
+   - If you have a separate link for a particular ticket, paste it into that option's `"zoho_url"`.
+4. Push to GitHub; Render redeploys automatically.
 
-## Admin: view / export registrations
-Set a secret first: `export AUTOWN_ADMIN_KEY=your-secret` (default is `change-me` — change it!).
-```bash
-curl -H "X-Admin-Key: your-secret" http://localhost:8000/api/registrations
-curl -H "X-Admin-Key: your-secret" http://localhost:8000/api/registrations.csv -o registrations.csv
-```
+Until a link is added, the Register button shows "Online registration will open soon".
 
-## Updating content
-Everything (speakers, schedule, fees, FAQs, sponsorship tiers, venue, support email) is in
-`backend/content.py`. Items marked **TBA** are placeholders — replace them once confirmed.
-Restart the backend and refresh the page; no Flutter rebuild needed.
+## Edit content
+Everything (text, tracks, events, fees, schedule, coordinators, FAQ, registration options) is in
+`frontend/assets/content.json`. Keep it valid JSON: double quotes, commas between items, no trailing commas.
 
-| Env var | Default | Purpose |
-|---|---|---|
-| `AUTOWN_ADMIN_KEY` | `change-me` | protects registration export |
-| `AUTOWN_DB` | `backend/autown26.db` | SQLite file path |
-| `AUTOWN_CORS` | `*` | allowed origins (comma-separated) |
+## Deploy (Render)
+The Render web service uses the `Dockerfile` (runtime: **Docker**). No environment variables are needed.

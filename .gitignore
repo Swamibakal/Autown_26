@@ -1,9 +1,3 @@
-﻿# Python
-backend/.venv/
-__pycache__/
-*.pyc
-backend/*.db
-
 # Flutter
 frontend/.dart_tool/
 frontend/build/

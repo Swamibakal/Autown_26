@@ -20,17 +20,24 @@ Future<void> openUrl(String url) async {
 IconData iconFor(String? name) {
   const icons = <String, IconData>{
     'hub': Icons.hub_outlined,
-    'psychology': Icons.psychology_outlined,
+    'lightbulb': Icons.lightbulb_outline,
+    'forum': Icons.forum_outlined,
+    'groups': Icons.groups_outlined,
     'build': Icons.build_outlined,
+    'construction': Icons.construction_outlined,
+    'emoji_events': Icons.emoji_events_outlined,
     'directions_car': Icons.directions_car_filled_outlined,
     'smart_toy': Icons.smart_toy_outlined,
     'security': Icons.security_outlined,
     'ev_station': Icons.ev_station_outlined,
     'memory': Icons.memory_outlined,
+    'cell_tower': Icons.cell_tower_outlined,
     'precision_manufacturing': Icons.precision_manufacturing_outlined,
     'article': Icons.article_outlined,
     'co_present': Icons.co_present_outlined,
     'sports_motorsports': Icons.sports_motorsports_outlined,
+    'flag': Icons.flag_outlined,
+    'view_in_ar': Icons.view_in_ar_outlined,
     'flight': Icons.flight_outlined,
     'shield': Icons.shield_outlined,
     'developer_board': Icons.developer_board_outlined,
@@ -39,7 +46,26 @@ IconData iconFor(String? name) {
   return icons[name] ?? Icons.auto_awesome_outlined;
 }
 
+/// The brochure's yellow / sky-blue / red accent stripe.
+class BrandStripe extends StatelessWidget {
+  const BrandStripe({super.key, this.width = 120, this.height = 4});
+
+  final double width;
+  final double height;
+
+  @override
+  Widget build(BuildContext context) {
+    final w = width / 3;
+    return Row(mainAxisSize: MainAxisSize.min, children: [
+      Container(width: w, height: height, color: AppColors.yellow),
+      Container(width: w, height: height, color: AppColors.sky),
+      Container(width: w, height: height, color: AppColors.stripeRed),
+    ]);
+  }
+}
+
 /// A page section with an eyebrow label, title, optional subtitle and centred content.
+/// [dark] gives the indigo panel look used in the brochure.
 class Section extends StatelessWidget {
   const Section({
     super.key,
@@ -48,6 +74,7 @@ class Section extends StatelessWidget {
     this.subtitle,
     required this.child,
     this.background,
+    this.dark = false,
   });
 
   final String eyebrow;
@@ -55,14 +82,15 @@ class Section extends StatelessWidget {
   final String? subtitle;
   final Widget child;
   final Color? background;
+  final bool dark;
 
   @override
   Widget build(BuildContext context) {
     final mobile = isMobile(context);
     return Container(
       width: double.infinity,
-      color: background,
-      padding: EdgeInsets.symmetric(horizontal: mobile ? 20 : 40, vertical: mobile ? 64 : 100),
+      color: dark ? AppColors.primary : background,
+      padding: EdgeInsets.symmetric(horizontal: mobile ? 20 : 40, vertical: mobile ? 64 : 96),
       child: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 1200),
@@ -70,22 +98,25 @@ class Section extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(children: [
-                Container(width: 28, height: 2, color: AppColors.cyan),
+                Container(width: 4, height: 18, color: dark ? AppColors.peach : AppColors.peachDeep),
                 const SizedBox(width: 10),
                 Text(eyebrow.toUpperCase(),
-                    style: bodyStyle(13, color: AppColors.cyan, weight: FontWeight.w700)
-                        .copyWith(letterSpacing: 3)),
+                    style: bodyStyle(13, color: dark ? AppColors.peach : AppColors.red, weight: FontWeight.w700)
+                        .copyWith(letterSpacing: 2.5)),
               ]),
+              const SizedBox(height: 12),
+              Text(title, style: displayStyle(mobile ? 28 : 38, color: dark ? AppColors.onDark : AppColors.primary)),
               const SizedBox(height: 14),
-              Text(title, style: displayStyle(mobile ? 28 : 40)),
+              const BrandStripe(),
               if (subtitle != null) ...[
-                const SizedBox(height: 12),
+                const SizedBox(height: 16),
                 ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 720),
-                  child: Text(subtitle!, style: bodyStyle(mobile ? 15 : 17)),
+                  constraints: const BoxConstraints(maxWidth: 760),
+                  child: Text(subtitle!,
+                      style: bodyStyle(mobile ? 15 : 16.5, color: dark ? AppColors.onDarkMuted : AppColors.muted)),
                 ),
               ],
-              SizedBox(height: mobile ? 32 : 48),
+              SizedBox(height: mobile ? 32 : 44),
               child,
             ],
           ),
@@ -117,14 +148,22 @@ class ResponsiveGrid extends StatelessWidget {
   }
 }
 
-/// Card that lifts and glows on hover.
+/// Card that lifts and gets a coloured edge on hover.
 class HoverCard extends StatefulWidget {
-  const HoverCard({super.key, required this.child, this.accent = AppColors.cyan, this.padding = 26, this.height});
+  const HoverCard({
+    super.key,
+    required this.child,
+    this.accent = AppColors.primary,
+    this.padding = 24,
+    this.height,
+    this.dark = false,
+  });
 
   final Widget child;
   final Color accent;
   final double padding;
   final double? height;
+  final bool dark;
 
   @override
   State<HoverCard> createState() => _HoverCardState();
@@ -135,21 +174,27 @@ class _HoverCardState extends State<HoverCard> {
 
   @override
   Widget build(BuildContext context) {
+    final baseBorder = widget.dark ? fade(Colors.white, 0.14) : AppColors.border;
     return MouseRegion(
       onEnter: (_) => setState(() => _hover = true),
       onExit: (_) => setState(() => _hover = false),
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 220),
+        duration: const Duration(milliseconds: 200),
         curve: Curves.easeOut,
         height: widget.height,
-        transform: Matrix4.translationValues(0, _hover ? -6 : 0, 0),
+        transform: Matrix4.translationValues(0, _hover ? -5 : 0, 0),
         padding: EdgeInsets.all(widget.padding),
         decoration: BoxDecoration(
-          color: AppColors.card,
-          borderRadius: BorderRadius.circular(18),
-          border: Border.all(color: _hover ? fade(widget.accent, 0.7) : AppColors.border),
+          color: widget.dark ? fade(Colors.white, _hover ? 0.10 : 0.06) : AppColors.card,
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(color: _hover ? widget.accent : baseBorder, width: _hover ? 1.5 : 1),
           boxShadow: [
-            if (_hover) BoxShadow(color: fade(widget.accent, 0.18), blurRadius: 30, spreadRadius: 1),
+            if (!widget.dark)
+              BoxShadow(
+                color: fade(AppColors.primary, _hover ? 0.12 : 0.05),
+                blurRadius: _hover ? 26 : 12,
+                offset: const Offset(0, 6),
+              ),
           ],
         ),
         child: widget.child,
@@ -160,7 +205,7 @@ class _HoverCardState extends State<HoverCard> {
 
 /// Rounded square holding an icon with a soft tinted background.
 class IconBadge extends StatelessWidget {
-  const IconBadge(this.icon, {super.key, this.color = AppColors.cyan, this.size = 52});
+  const IconBadge(this.icon, {super.key, this.color = AppColors.primary, this.size = 50});
 
   final IconData icon;
   final Color color;
@@ -173,8 +218,7 @@ class IconBadge extends StatelessWidget {
       height: size,
       decoration: BoxDecoration(
         color: fade(color, 0.12),
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: fade(color, 0.35)),
+        borderRadius: BorderRadius.circular(12),
       ),
       child: Icon(icon, color: color, size: size * 0.5),
     );
@@ -200,7 +244,7 @@ class GradientText extends StatelessWidget {
 }
 
 class Pill extends StatelessWidget {
-  const Pill(this.text, {super.key, this.color = AppColors.cyan, this.icon});
+  const Pill(this.text, {super.key, this.color = AppColors.primary, this.icon});
 
   final String text;
   final Color color;
@@ -211,23 +255,25 @@ class Pill extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
-        color: fade(color, 0.12),
+        color: fade(color, 0.10),
         borderRadius: BorderRadius.circular(100),
-        border: Border.all(color: fade(color, 0.4)),
+        border: Border.all(color: fade(color, 0.35)),
       ),
       child: Row(mainAxisSize: MainAxisSize.min, children: [
         if (icon != null) ...[Icon(icon, size: 14, color: color), const SizedBox(width: 6)],
-        Text(text, style: bodyStyle(12.5, color: color, weight: FontWeight.w600)),
+        Flexible(child: Text(text, style: bodyStyle(12.5, color: color, weight: FontWeight.w600))),
       ]),
     );
   }
 }
-/// BITS Pilani WILP logo (no background, sits directly on the dark theme).
+
+/// BITS Pilani WILP logo. [white] uses the version made for indigo backgrounds.
 /// Clicking it opens the WILP website.
 class WilpLogo extends StatelessWidget {
-  const WilpLogo({super.key, this.height = 40});
+  const WilpLogo({super.key, this.height = 40, this.white = false});
 
   final double height;
+  final bool white;
 
   @override
   Widget build(BuildContext context) {
@@ -238,15 +284,44 @@ class WilpLogo extends StatelessWidget {
         child: SizedBox(
           height: height,
           child: Image.asset(
-            'assets/images/wilp_logo.png',
+            white ? 'assets/images/wilp_logo_white.png' : 'assets/images/wilp_logo.png',
             fit: BoxFit.contain,
+            semanticLabel: 'BITS Pilani Work Integrated Learning Programmes',
             errorBuilder: (_, __, ___) => Center(
-              child: Text(
-                'BITS Pilani WILP',
-                style: bodyStyle(height * 0.32, color: Colors.white, weight: FontWeight.w800),
-              ),
+              child: Text('BITS Pilani WILP',
+                  style: bodyStyle(height * 0.32, color: white ? Colors.white : AppColors.primary, weight: FontWeight.w800)),
             ),
           ),
+        ),
+      ),
+    );
+  }
+}
+
+/// AUTOwn'26 event logo. [tagline] adds the theme line under it; [white] is for indigo backgrounds.
+class AutownLogo extends StatelessWidget {
+  const AutownLogo({super.key, this.height = 40, this.white = false, this.tagline = false});
+
+  final double height;
+  final bool white;
+  final bool tagline;
+
+  @override
+  Widget build(BuildContext context) {
+    final file = white
+        ? 'assets/images/autown_logo_white.png'
+        : tagline
+            ? 'assets/images/autown_logo_tagline.png'
+            : 'assets/images/autown_logo.png';
+    return SizedBox(
+      height: height,
+      child: Image.asset(
+        file,
+        fit: BoxFit.contain,
+        semanticLabel: "AUTOwn'26",
+        errorBuilder: (_, __, ___) => FittedBox(
+          child: Text("AUTOwn'26",
+              style: displayStyle(48, color: white ? Colors.white : AppColors.primary, weight: FontWeight.w800)),
         ),
       ),
     );

@@ -1,202 +1,271 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-import '../api.dart';
-import '../sections/contact.dart' show validateEmail;
 import '../theme.dart';
 import 'common.dart';
 
-Future<void> showRegisterDialog(BuildContext context, {required List<Json> events, String? initialEventId}) {
+/// Opens the registration dialog. [registration] is the "registration" block of
+/// assets/content.json. [optionId] preselects an event (e.g. from an event card).
+Future<void> showRegisterDialog(BuildContext context, {required Json registration, String? optionId}) {
   return showDialog(
     context: context,
-    barrierColor: fade(Colors.black, 0.7),
-    builder: (_) => RegisterDialog(events: events.where((e) => e['open'] != false).toList(), initialEventId: initialEventId),
+    barrierColor: fade(Colors.black, 0.6),
+    builder: (_) => RegisterDialog(registration: registration, optionId: optionId),
   );
 }
 
+/// Registration happens on Zoho Backstage. This dialog only helps people pick
+/// the right ticket: Competitions / Workshop / Attendee → event → (track),
+/// then opens the matching Zoho Backstage link in a new tab.
 class RegisterDialog extends StatefulWidget {
-  const RegisterDialog({super.key, required this.events, this.initialEventId});
+  const RegisterDialog({super.key, required this.registration, this.optionId});
 
-  final List<Json> events;
-  final String? initialEventId;
+  final Json registration;
+  final String? optionId;
 
   @override
   State<RegisterDialog> createState() => _RegisterDialogState();
 }
 
 class _RegisterDialogState extends State<RegisterDialog> {
-  final _form = GlobalKey<FormState>();
-  final _name = TextEditingController();
-  final _email = TextEditingController();
-  final _phone = TextEditingController();
-  final _org = TextEditingController();
-  final _team = TextEditingController();
-  final _msg = TextEditingController();
-  late String? _eventId = widget.initialEventId ?? (widget.events.isNotEmpty ? widget.events.first['id'] : null);
-  int _teamSize = 2;
-  bool _busy = false;
+  late final List<Json> _tabs = listOf(widget.registration['tabs']);
+  int _tab = 0;
+  String? _optionId;
+  String? _sub;
   String? _error;
-  Json? _success;
-
-  Json? get _event => widget.events.where((e) => e['id'] == _eventId).firstOrNull;
-  bool get _isTeam => (_event?['team'] ?? 'Individual') != 'Individual';
 
   @override
-  void dispose() {
-    for (final c in [_name, _email, _phone, _org, _team, _msg]) {
-      c.dispose();
+  void initState() {
+    super.initState();
+    // Preselect the tab + option that was clicked on an event card.
+    if (widget.optionId != null) {
+      for (var i = 0; i < _tabs.length; i++) {
+        if (listOf(_tabs[i]['options']).any((o) => o['id'] == widget.optionId)) {
+          _tab = i;
+          _optionId = widget.optionId;
+        }
+      }
     }
-    super.dispose();
   }
 
-  Future<void> _submit() async {
-    if (!_form.currentState!.validate()) return;
-    setState(() {
-      _busy = true;
-      _error = null;
-    });
-    try {
-      final res = await Api.register({
-        'event_id': _eventId,
-        'name': _name.text.trim(),
-        'email': _email.text.trim(),
-        'phone': _phone.text.trim(),
-        'organisation': _org.text.trim().isEmpty ? null : _org.text.trim(),
-        'team_name': _isTeam && _team.text.trim().isNotEmpty ? _team.text.trim() : null,
-        'team_size': _isTeam ? _teamSize : 1,
-        'message': _msg.text.trim().isEmpty ? null : _msg.text.trim(),
-      });
-      setState(() => _success = res);
-    } catch (e) {
-      setState(() => _error = e.toString());
-    } finally {
-      if (mounted) setState(() => _busy = false);
+  List<Json> get _options => _tabs.isEmpty ? <Json>[] : listOf(_tabs[_tab]['options']);
+
+  Json? get _option {
+    for (final o in _options) {
+      if (o['id'] == _optionId) return o;
     }
+    return null;
+  }
+
+  Json? get _subBlock => _option?['sub'] as Json?;
+
+  bool get _ready => _option != null && (_subBlock == null || _sub != null);
+
+  String get _zohoUrl {
+    final own = (_option?['zoho_url'] ?? '').toString().trim();
+    if (own.isNotEmpty) return own;
+    return (widget.registration['zoho_event_url'] ?? '').toString().trim();
+  }
+
+  void _selectTab(int i) => setState(() {
+        _tab = i;
+        _optionId = null;
+        _sub = null;
+        _error = null;
+      });
+
+  Future<void> _continue() async {
+    final url = _zohoUrl;
+    if (url.isEmpty) {
+      setState(() => _error = 'Online registration will open soon. Please check back shortly.');
+      return;
+    }
+    final ok = await launchUrl(Uri.parse(url), webOnlyWindowName: '_blank');
+    if (!ok && mounted) setState(() => _error = 'Could not open Zoho Backstage. Please allow pop-ups and try again.');
   }
 
   @override
   Widget build(BuildContext context) {
     final mobile = isMobile(context);
     return Dialog(
-      backgroundColor: AppColors.surface,
+      backgroundColor: AppColors.bg,
       insetPadding: EdgeInsets.all(mobile ? 12 : 40),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
-        side: const BorderSide(color: AppColors.border),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+      clipBehavior: Clip.antiAlias,
       child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 560),
+        constraints: const BoxConstraints(maxWidth: 580),
         child: SingleChildScrollView(
-          padding: EdgeInsets.all(mobile ? 20 : 32),
-          child: _success != null ? _successView() : _formView(),
+          child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, mainAxisSize: MainAxisSize.min, children: [
+            _header(mobile),
+            Padding(
+              padding: EdgeInsets.fromLTRB(mobile ? 18 : 28, 20, mobile ? 18 : 28, 26),
+              child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+                _tabBar(mobile),
+                const SizedBox(height: 22),
+                if (_tabs.isNotEmpty) ..._dropdowns(),
+                if (_option != null) ...[
+                  const SizedBox(height: 18),
+                  _summary(),
+                ],
+                if (_error != null) ...[
+                  const SizedBox(height: 14),
+                  Text(_error!, style: bodyStyle(13.5, color: AppColors.red, weight: FontWeight.w600)),
+                ],
+                const SizedBox(height: 22),
+                FilledButton.icon(
+                  onPressed: _ready ? _continue : null,
+                  icon: const Icon(Icons.open_in_new),
+                  label: const Text('Continue to Zoho Backstage'),
+                ),
+                const SizedBox(height: 12),
+                Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  const Icon(Icons.lock_outline, size: 15, color: AppColors.muted),
+                  const SizedBox(width: 6),
+                  Expanded(
+                    child: Text(
+                      'You will complete your registration and payment securely on Zoho Backstage. '
+                      '${widget.registration['after_note'] ?? ''}',
+                      style: bodyStyle(12.5),
+                    ),
+                  ),
+                ]),
+              ]),
+            ),
+          ]),
         ),
       ),
     );
   }
 
-  Widget _successView() => Column(mainAxisSize: MainAxisSize.min, children: [
-        const Icon(Icons.verified_outlined, color: AppColors.green, size: 72),
-        const SizedBox(height: 16),
-        Text("You're on the grid!", style: displayStyle(24)),
-        const SizedBox(height: 10),
-        Text(_success!['message'] ?? '', textAlign: TextAlign.center, style: bodyStyle(15)),
-        const SizedBox(height: 18),
-        Pill('Registration ID: ${_success!['ticket']}', color: AppColors.cyan, icon: Icons.confirmation_number_outlined),
-        const SizedBox(height: 24),
-        FilledButton(onPressed: () => Navigator.pop(context), child: const Text('Done')),
-      ]);
-
-  Widget _formView() => Form(
-        key: _form,
-        child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, mainAxisSize: MainAxisSize.min, children: [
-          Row(children: [
-            Expanded(child: Text('Register', style: displayStyle(24))),
-            IconButton(onPressed: () => Navigator.pop(context), icon: const Icon(Icons.close)),
-          ]),
-          Text("AUTOwn'26 • 13–14 Feb 2027", style: bodyStyle(13.5, color: AppColors.cyan)),
-          const SizedBox(height: 22),
-          DropdownButtonFormField<String>(
-            value: _eventId,
-            isExpanded: true,
-            dropdownColor: AppColors.card,
-            decoration: const InputDecoration(labelText: 'Event', prefixIcon: Icon(Icons.flag_outlined)),
-            items: [
-              for (final e in widget.events)
-                DropdownMenuItem(value: e['id'] as String, child: Text(e['title'] ?? '', overflow: TextOverflow.ellipsis)),
-            ],
-            onChanged: (v) => setState(() => _eventId = v),
-            validator: (v) => v == null ? 'Select an event' : null,
-          ),
-          if (_event != null) ...[
-            const SizedBox(height: 8),
-            Text('Team: ${_event!['team']}  •  Fee: ${_event!['fee']}', style: bodyStyle(12.5)),
-          ],
-          const SizedBox(height: 14),
-          TextFormField(
-            controller: _name,
-            decoration: InputDecoration(
-                labelText: _isTeam ? 'Team lead name' : 'Full name', prefixIcon: const Icon(Icons.person_outline)),
-            validator: (v) => (v ?? '').trim().length < 2 ? 'Enter your name' : null,
-          ),
-          const SizedBox(height: 14),
-          TextFormField(
-            controller: _email,
-            keyboardType: TextInputType.emailAddress,
-            decoration: const InputDecoration(labelText: 'Email', prefixIcon: Icon(Icons.mail_outline)),
-            validator: validateEmail,
-          ),
-          const SizedBox(height: 14),
-          TextFormField(
-            controller: _phone,
-            keyboardType: TextInputType.phone,
-            decoration: const InputDecoration(labelText: 'Phone', prefixIcon: Icon(Icons.phone_outlined)),
-            validator: (v) => (v ?? '').replaceAll(RegExp(r'\D'), '').length < 7 ? 'Enter a valid phone number' : null,
-          ),
-          const SizedBox(height: 14),
-          TextFormField(
-            controller: _org,
-            decoration: const InputDecoration(
-                labelText: 'College / Organisation (optional)', prefixIcon: Icon(Icons.apartment_outlined)),
-          ),
-          if (_isTeam) ...[
-            const SizedBox(height: 14),
-            TextFormField(
-              controller: _team,
-              decoration: const InputDecoration(labelText: 'Team name', prefixIcon: Icon(Icons.groups_outlined)),
-              validator: (v) => _isTeam && (v ?? '').trim().isEmpty ? 'Enter a team name' : null,
-            ),
-            const SizedBox(height: 14),
-            Row(children: [
-              Text('Team size', style: bodyStyle(14, color: AppColors.text)),
-              const Spacer(),
-              IconButton(
-                onPressed: _teamSize > 1 ? () => setState(() => _teamSize--) : null,
-                icon: const Icon(Icons.remove_circle_outline),
-              ),
-              Text('$_teamSize', style: displayStyle(18, color: AppColors.cyan)),
-              IconButton(
-                onPressed: _teamSize < 10 ? () => setState(() => _teamSize++) : null,
-                icon: const Icon(Icons.add_circle_outline),
-              ),
+  Widget _header(bool mobile) => Container(
+        color: AppColors.primary,
+        padding: EdgeInsets.fromLTRB(mobile ? 18 : 28, 18, 10, 16),
+        child: Row(children: [
+          Expanded(
+            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text("Register for AUTOwn'26", style: displayStyle(mobile ? 19 : 22, color: Colors.white)),
+              const SizedBox(height: 2),
+              Text('13–14 February 2027 • Pre-event workshops on 12 February',
+                  style: bodyStyle(12.5, color: AppColors.peach)),
             ]),
-          ],
-          const SizedBox(height: 14),
-          TextFormField(
-            controller: _msg,
-            maxLines: 3,
-            decoration: const InputDecoration(
-                labelText: 'Paper / project title or notes (optional)', alignLabelWithHint: true),
           ),
-          if (_error != null) ...[
-            const SizedBox(height: 14),
-            Text(_error!, style: bodyStyle(13.5, color: AppColors.pink, weight: FontWeight.w600)),
-          ],
-          const SizedBox(height: 22),
-          FilledButton(
-            onPressed: _busy ? null : _submit,
-            child: _busy
-                ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2))
-                : const Text('Submit Registration'),
+          IconButton(
+            onPressed: () => Navigator.pop(context),
+            icon: const Icon(Icons.close, color: Colors.white),
+            tooltip: 'Close',
           ),
         ]),
       );
+
+  /// The three tabs: Competitions / Workshop / Attendee.
+  Widget _tabBar(bool mobile) {
+    return Container(
+      padding: const EdgeInsets.all(4),
+      decoration: BoxDecoration(color: AppColors.surface, borderRadius: BorderRadius.circular(12)),
+      child: Row(children: [
+        for (var i = 0; i < _tabs.length; i++)
+          Expanded(
+            child: GestureDetector(
+              onTap: () => _selectTab(i),
+              child: MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 200),
+                  padding: EdgeInsets.symmetric(vertical: mobile ? 10 : 12),
+                  decoration: BoxDecoration(
+                    color: _tab == i ? AppColors.primary : Colors.transparent,
+                    borderRadius: BorderRadius.circular(9),
+                  ),
+                  child: Column(mainAxisSize: MainAxisSize.min, children: [
+                    Icon(iconFor(_tabs[i]['icon']), size: 20, color: _tab == i ? AppColors.peach : AppColors.primary),
+                    const SizedBox(height: 4),
+                    Text(_tabs[i]['label'] ?? '',
+                        textAlign: TextAlign.center,
+                        style: bodyStyle(mobile ? 12.5 : 14,
+                            color: _tab == i ? Colors.white : AppColors.primary, weight: FontWeight.w700)),
+                  ]),
+                ),
+              ),
+            ),
+          ),
+      ]),
+    );
+  }
+
+  List<Widget> _dropdowns() {
+    final sub = _subBlock;
+    return [
+      DropdownButtonFormField<String>(
+        key: ValueKey('opt-$_tab'),
+        value: _optionId,
+        isExpanded: true,
+        dropdownColor: AppColors.bg,
+        decoration: InputDecoration(
+          labelText: _tabs[_tab]['prompt'] ?? 'Choose',
+          prefixIcon: const Icon(Icons.list_alt_outlined),
+        ),
+        items: [
+          for (final o in _options)
+            DropdownMenuItem<String>(
+              value: o['id'] as String,
+              child: Text(o['label'] ?? '', overflow: TextOverflow.ellipsis),
+            ),
+        ],
+        onChanged: (v) => setState(() {
+          _optionId = v;
+          _sub = null;
+          _error = null;
+        }),
+      ),
+      if (sub != null) ...[
+        const SizedBox(height: 14),
+        DropdownButtonFormField<String>(
+          key: ValueKey('sub-$_optionId'),
+          value: _sub,
+          isExpanded: true,
+          dropdownColor: AppColors.bg,
+          decoration: InputDecoration(
+            labelText: sub['label'] ?? 'Choose',
+            prefixIcon: const Icon(Icons.alt_route_outlined),
+          ),
+          items: [
+            for (final s in (sub['options'] as List? ?? []))
+              DropdownMenuItem<String>(value: s.toString(), child: Text(s.toString(), overflow: TextOverflow.ellipsis)),
+          ],
+          onChanged: (v) => setState(() => _sub = v),
+        ),
+      ],
+    ];
+  }
+
+  Widget _summary() {
+    final o = _option!;
+    final sub = _subBlock;
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: fade(AppColors.peach, 0.35),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: AppColors.peach),
+      ),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Text(o['label'] ?? '', style: bodyStyle(15.5, color: AppColors.primary, weight: FontWeight.w700)),
+        if (sub != null && _sub != null)
+          Text('${sub['label']}: $_sub', style: bodyStyle(13.5, color: AppColors.primary)),
+        const SizedBox(height: 6),
+        Row(children: [
+          const Icon(Icons.payments_outlined, size: 16, color: AppColors.red),
+          const SizedBox(width: 6),
+          Expanded(child: Text('Fee: ${o['fee'] ?? 'As shown on Zoho Backstage'}',
+              style: bodyStyle(13.5, color: AppColors.text, weight: FontWeight.w600))),
+        ]),
+        if (sub != null)
+          Padding(
+            padding: const EdgeInsets.only(top: 6),
+            child: Text('On Zoho Backstage, choose the "${o['label']}" ticket and enter your ${sub['label'].toString().toLowerCase()}.',
+                style: bodyStyle(12.5)),
+          ),
+      ]),
+    );
+  }
 }

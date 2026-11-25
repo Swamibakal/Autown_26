@@ -3,10 +3,18 @@ import 'package:flutter/material.dart';
 import '../theme.dart';
 import '../widgets/common.dart';
 
+/// Registration fees + filterable list of presentations, competitions and workshops.
 class EventsSection extends StatefulWidget {
-  const EventsSection({super.key, required this.events, required this.prizePool, required this.onRegister});
+  const EventsSection({
+    super.key,
+    required this.events,
+    required this.fees,
+    required this.prizePool,
+    required this.onRegister,
+  });
 
   final List<Json> events;
+  final List<Json> fees;
   final String prizePool;
   final void Function(String eventId) onRegister;
 
@@ -18,10 +26,15 @@ class _EventsSectionState extends State<EventsSection> {
   String _filter = 'All';
 
   static const _catColor = {
-    'Presentation': AppColors.blue,
-    'Competition': AppColors.pink,
+    'Presentation': AppColors.primary,
+    'Competition': AppColors.red,
     'Workshop': AppColors.green,
-    'Attendee': AppColors.amber,
+  };
+
+  static const _catLabel = {
+    'Presentation': 'Presentations',
+    'Competition': 'Competitions',
+    'Workshop': 'Workshops',
   };
 
   @override
@@ -30,29 +43,95 @@ class _EventsSectionState extends State<EventsSection> {
     final shown = _filter == 'All' ? widget.events : widget.events.where((e) => e['category'] == _filter).toList();
 
     return Section(
-      eyebrow: 'Events',
+      eyebrow: 'Events & Registration',
       title: 'Present. Compete. Learn.',
-      subtitle: 'Choose your challenge — paper and project presentations, autonomous racing competitions '
-          'and hands-on technical workshops. Prizes worth ${widget.prizePool} up for grabs!',
+      subtitle: 'Technical competitions, project and paper presentations and industry-oriented workshops — '
+          'with prize money up to ${widget.prizePool}.',
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        _FeesPanel(fees: widget.fees, prizePool: widget.prizePool),
+        const SizedBox(height: 40),
         Wrap(spacing: 10, runSpacing: 10, children: [
           for (final c in cats)
             FilterChip(
               selected: _filter == c,
               onSelected: (_) => setState(() => _filter = c),
               showCheckmark: false,
-              selectedColor: fade(AppColors.cyan, 0.2),
-              backgroundColor: AppColors.card,
-              side: BorderSide(color: _filter == c ? AppColors.cyan : AppColors.border),
-              label: Text(c, style: bodyStyle(14, color: _filter == c ? AppColors.cyan : AppColors.text, weight: FontWeight.w600)),
+              selectedColor: AppColors.primary,
+              backgroundColor: AppColors.bg,
+              side: BorderSide(color: _filter == c ? AppColors.primary : AppColors.border),
+              label: Text(_catLabel[c] ?? c,
+                  style: bodyStyle(14, color: _filter == c ? Colors.white : AppColors.primary, weight: FontWeight.w600)),
             ),
         ]),
-        const SizedBox(height: 28),
+        const SizedBox(height: 24),
         ResponsiveGrid(
           minItemWidth: 320,
-          children: [for (final e in shown) _EventCard(event: e, color: _catColor[e['category']] ?? AppColors.cyan, onRegister: widget.onRegister)],
+          children: [
+            for (final e in shown)
+              _EventCard(event: e, color: _catColor[e['category']] ?? AppColors.primary, onRegister: widget.onRegister),
+          ],
         ),
       ]),
+    );
+  }
+}
+
+/// "Registration Details" panel, styled like the brochure: indigo with the prize seal.
+class _FeesPanel extends StatelessWidget {
+  const _FeesPanel({required this.fees, required this.prizePool});
+  final List<Json> fees;
+  final String prizePool;
+
+  @override
+  Widget build(BuildContext context) {
+    final mobile = isMobile(context);
+    final feeList = Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      Row(children: [
+        const Icon(Icons.receipt_long_outlined, color: AppColors.yellow),
+        const SizedBox(width: 10),
+        Text('Registration Details', style: displayStyle(mobile ? 20 : 24, color: Colors.white)),
+      ]),
+      const SizedBox(height: 18),
+      for (final f in fees)
+        Padding(
+          padding: const EdgeInsets.only(bottom: 12),
+          child: Row(children: [
+            Icon(iconFor(f['icon']), color: AppColors.sky, size: 22),
+            const SizedBox(width: 12),
+            Expanded(child: Text(f['category'] ?? '', style: bodyStyle(15.5, color: Colors.white, weight: FontWeight.w600))),
+            const SizedBox(width: 12),
+            Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
+              Text(f['fee'] ?? '', style: displayStyle(mobile ? 18 : 20, color: AppColors.yellow)),
+              Text(f['unit'] ?? '', style: bodyStyle(12, color: AppColors.onDarkMuted)),
+            ]),
+          ]),
+        ),
+    ]);
+    final seal = Container(
+      width: 150,
+      height: 150,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: AppColors.primaryLight,
+        border: Border.all(color: AppColors.yellow, width: 3),
+      ),
+      child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+        const Icon(Icons.star, color: AppColors.yellow, size: 18),
+        Text('PRIZE MONEY\nUP TO',
+            textAlign: TextAlign.center,
+            style: bodyStyle(11, color: Colors.white, weight: FontWeight.w800).copyWith(height: 1.2, letterSpacing: 1)),
+        const SizedBox(height: 4),
+        Text(prizePool, style: displayStyle(20, color: AppColors.yellow, weight: FontWeight.w800)),
+      ]),
+    );
+
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.all(mobile ? 22 : 32),
+      decoration: BoxDecoration(color: AppColors.primary, borderRadius: BorderRadius.circular(16)),
+      child: mobile
+          ? Column(children: [feeList, const SizedBox(height: 16), seal])
+          : Row(children: [Expanded(child: feeList), const SizedBox(width: 40), seal]),
     );
   }
 }
@@ -67,25 +146,31 @@ class _EventCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final open = event['open'] != false;
+    final partner = (event['partner'] ?? '').toString();
     return HoverCard(
       accent: color,
-      height: 340,
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Row(children: [
           IconBadge(iconFor(event['icon']), color: color),
           const Spacer(),
           Pill(event['category'] ?? '', color: color),
         ]),
-        const SizedBox(height: 18),
-        Text(event['title'] ?? '', style: bodyStyle(19, color: AppColors.text, weight: FontWeight.w700)),
+        const SizedBox(height: 16),
+        Text(event['title'] ?? '', style: bodyStyle(18, color: AppColors.primary, weight: FontWeight.w700)),
+        if (partner.isNotEmpty) ...[
+          const SizedBox(height: 4),
+          Text(partner, style: bodyStyle(13, color: AppColors.red, weight: FontWeight.w600)),
+        ],
         const SizedBox(height: 8),
-        Expanded(
-          child: Text(event['text'] ?? '', style: bodyStyle(14.5), overflow: TextOverflow.fade),
-        ),
-        const SizedBox(height: 10),
-        _meta(Icons.groups_outlined, event['team'] ?? ''),
-        const SizedBox(height: 4),
-        _meta(Icons.payments_outlined, 'Fee: ${event['fee'] ?? 'TBA'}'),
+        Text(event['text'] ?? '', style: bodyStyle(14.5)),
+        const SizedBox(height: 14),
+        Row(children: [
+          const Icon(Icons.payments_outlined, size: 17, color: AppColors.primary),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Text(event['fee'] ?? 'TBA', style: bodyStyle(14, color: AppColors.primary, weight: FontWeight.w700)),
+          ),
+        ]),
         const SizedBox(height: 16),
         SizedBox(
           width: double.infinity,
@@ -101,10 +186,4 @@ class _EventCard extends StatelessWidget {
       ]),
     );
   }
-
-  Widget _meta(IconData icon, String text) => Row(children: [
-        Icon(icon, size: 16, color: AppColors.muted),
-        const SizedBox(width: 8),
-        Expanded(child: Text(text, style: bodyStyle(13, color: AppColors.text))),
-      ]);
 }

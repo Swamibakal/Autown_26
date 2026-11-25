@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'api.dart';
+import 'content.dart';
 import 'sections/contact.dart';
 import 'sections/events.dart';
 import 'sections/hero.dart';
@@ -25,7 +25,7 @@ class AutownApp extends StatelessWidget {
   }
 }
 
-const navItems = ['Home', 'About', 'Tracks', 'Events', 'Speakers', 'Schedule', 'Sponsors', 'FAQ', 'Contact'];
+const navItems = ['Home', 'About', 'Tracks', 'Events', 'Schedule', 'Speakers', 'Sponsors', 'Contact', 'FAQ'];
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -35,7 +35,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late Future<Json> _site = Api.fetchSite();
+  late Future<Json> _site = loadSiteContent();
   final _scaffold = GlobalKey<ScaffoldState>();
   final _scroll = ScrollController();
   final Map<String, GlobalKey> _keys = {for (final n in navItems) n: GlobalKey()};
@@ -78,7 +78,8 @@ class _HomePageState extends State<HomePage> {
   Widget _page(Json site) {
     final event = site['event'] as Json;
     final events = listOf(site['events']);
-    void register([String? id]) => showRegisterDialog(context, events: events, initialEventId: id);
+    final registration = (site['registration'] ?? <String, dynamic>{}) as Json;
+    void register([String? id]) => showRegisterDialog(context, registration: registration, optionId: id);
 
     Widget anchor(String id, Widget child) => KeyedSubtree(key: _keys[id], child: child);
 
@@ -90,14 +91,25 @@ class _HomePageState extends State<HomePage> {
           controller: _scroll,
           child: Column(children: [
             anchor('Home', HeroSection(event: event, onRegister: register, onExplore: () => _goTo('Events'))),
-            anchor('About', VisionSection(vision: site['vision'], event: event, trackCount: listOf(site['tracks']).length)),
+            anchor('About', AboutSection(about: site['about'] ?? <String, dynamic>{}, event: event, trackCount: listOf(site['tracks']).length)),
+            VisionSection(vision: site['vision']),
             anchor('Tracks', TracksSection(tracks: listOf(site['tracks']))),
-            anchor('Events', EventsSection(events: events, prizePool: event['prize_pool'] ?? '', onRegister: register)),
-            anchor('Speakers', SpeakersSection(speakers: listOf(site['speakers']))),
+            anchor('Events', EventsSection(
+              events: events,
+              fees: listOf(site['fees']),
+              prizePool: event['prize_pool'] ?? '',
+              onRegister: register,
+            )),
             anchor('Schedule', ScheduleSection(days: listOf(site['schedule']))),
+            anchor('Speakers', SpeakersSection(speakers: listOf(site['speakers']))),
             anchor('Sponsors', SponsorshipSection(data: site['sponsorship'], onContact: () => _goTo('Contact'))),
+            anchor('Contact', ContactSection(
+              coordinators: listOf(site['coordinators']),
+              venue: site['venue'],
+              event: event,
+              afterNote: (registration['after_note'] ?? '').toString(),
+            )),
             anchor('FAQ', FaqSection(faqs: listOf(site['faqs']))),
-            anchor('Contact', ContactSection(coordinators: listOf(site['coordinators']), venue: site['venue'], event: event)),
             Footer(event: event, onNav: _goTo, navItems: navItems),
           ]),
         ),
@@ -112,22 +124,23 @@ class _HomePageState extends State<HomePage> {
       duration: const Duration(milliseconds: 250),
       padding: EdgeInsets.symmetric(horizontal: mobile ? 16 : 36, vertical: _scrolled ? 10 : 18),
       decoration: BoxDecoration(
-        color: _scrolled ? fade(AppColors.bg, 0.92) : Colors.transparent,
+        color: _scrolled ? fade(AppColors.bg, 0.96) : Colors.transparent,
         border: Border(bottom: BorderSide(color: _scrolled ? AppColors.border : Colors.transparent)),
+        boxShadow: [if (_scrolled) BoxShadow(color: fade(AppColors.primary, 0.08), blurRadius: 16)],
       ),
       child: Row(children: [
-               WilpLogo(height: mobile ? 40 : 52),
-        Container(width: 1, height: 28, margin: const EdgeInsets.symmetric(horizontal: 14), color: AppColors.border),
+        WilpLogo(height: mobile ? 36 : 46),
+        Container(width: 1, height: 30, margin: const EdgeInsets.symmetric(horizontal: 14), color: AppColors.border),
         InkWell(
           onTap: () => _goTo('Home'),
-          child: GradientText("AUTOwn'26", style: displayStyle(20)),
+          child: AutownLogo(height: mobile ? 30 : 38),
         ),
         const Spacer(),
         if (!mobile)
           for (final n in navItems.skip(1))
             TextButton(
               onPressed: () => _goTo(n),
-              child: Text(n, style: bodyStyle(14.5, color: AppColors.text, weight: FontWeight.w500)),
+              child: Text(n, style: bodyStyle(14.5, color: AppColors.primary, weight: FontWeight.w600)),
             ),
         const SizedBox(width: 12),
         if (!mobile)
@@ -139,7 +152,7 @@ class _HomePageState extends State<HomePage> {
         else
           IconButton(
             onPressed: () => _scaffold.currentState?.openEndDrawer(),
-            icon: const Icon(Icons.menu_rounded, color: AppColors.text),
+            icon: const Icon(Icons.menu_rounded, color: AppColors.primary),
           ),
       ]),
     );
@@ -149,11 +162,15 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: AppColors.surface,
         child: SafeArea(
           child: ListView(padding: const EdgeInsets.all(16), children: [
-            GradientText("AUTOwn'26", style: displayStyle(22)),
-            const SizedBox(height: 20),
+            const Align(alignment: Alignment.centerLeft, child: WilpLogo(height: 44)),
+            const SizedBox(height: 14),
+            const Align(alignment: Alignment.centerLeft, child: AutownLogo(height: 40)),
+            const SizedBox(height: 10),
+            const BrandStripe(),
+            const SizedBox(height: 12),
             for (final n in navItems)
               ListTile(
-                title: Text(n, style: bodyStyle(16, color: AppColors.text, weight: FontWeight.w500)),
+                title: Text(n, style: bodyStyle(16, color: AppColors.primary, weight: FontWeight.w600)),
                 onTap: () {
                   _scaffold.currentState?.closeEndDrawer();
                   Future.delayed(const Duration(milliseconds: 250), () => _goTo(n));
@@ -174,9 +191,9 @@ class _HomePageState extends State<HomePage> {
   Widget _loadingView() => Scaffold(
         body: Center(
           child: Column(mainAxisSize: MainAxisSize.min, children: [
-            GradientText("AUTOwn'26", style: displayStyle(40)),
+            const AutownLogo(height: 80),
             const SizedBox(height: 24),
-            const SizedBox(width: 160, child: LinearProgressIndicator(color: AppColors.cyan, backgroundColor: AppColors.border)),
+            const SizedBox(width: 160, child: LinearProgressIndicator(color: AppColors.red, backgroundColor: AppColors.border)),
           ]),
         ),
       );
@@ -186,15 +203,15 @@ class _HomePageState extends State<HomePage> {
           child: Padding(
             padding: const EdgeInsets.all(24),
             child: Column(mainAxisSize: MainAxisSize.min, children: [
-              const Icon(Icons.cloud_off_outlined, size: 56, color: AppColors.pink),
+              const Icon(Icons.error_outline, size: 56, color: AppColors.red),
               const SizedBox(height: 16),
-              Text('Could not reach the AUTOwn\'26 server', style: bodyStyle(18, color: AppColors.text, weight: FontWeight.w700)),
+              Text("Could not load the AUTOwn'26 page", style: bodyStyle(18, color: AppColors.text, weight: FontWeight.w700)),
               const SizedBox(height: 8),
-              Text('Make sure the Python backend is running (uvicorn main:app --port 8000).\n$msg',
+              Text('Please refresh the page. If you edited assets/content.json, check it is valid JSON.\n$msg',
                   textAlign: TextAlign.center, style: bodyStyle(14)),
               const SizedBox(height: 20),
               FilledButton(onPressed: () => setState(() {
-                  _site = Api.fetchSite();
+                  _site = loadSiteContent();
                 }), child: const Text('Retry')),
             ]),
           ),
