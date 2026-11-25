@@ -164,7 +164,7 @@ class Footer extends StatelessWidget {
           runSpacing: 20,
           children: [
             AutownLogo(height: mobile ? 56 : 72, white: true),
-            WilpLogo(height: mobile ? 52 : 64, white: true),
+            Container(padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10), decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10)), child: WilpLogo(height: mobile ? 48 : 58)),
           ],
         ),
         const SizedBox(height: 16),

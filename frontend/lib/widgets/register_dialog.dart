@@ -115,7 +115,7 @@ class _RegisterDialogState extends State<RegisterDialog> {
                 FilledButton.icon(
                   onPressed: _ready ? _continue : null,
                   icon: const Icon(Icons.open_in_new),
-                  label: const Text('Continue to Zoho Backstage'),
+                  label: const Text('Continue'),
                 ),
                 const SizedBox(height: 12),
                 Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
