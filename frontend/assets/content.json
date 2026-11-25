@@ -9,7 +9,7 @@
     "pre_event_label": "Pre-event workshops: Friday, 12 February 2027",
     "venue_short": "BITS Pilani, Hyderabad Campus",
     "prize_pool": "₹4,00,000",
-    "registration_notice": "Registrations are open on Zoho Backstage. Last date will be announced soon.",
+    "registration_notice": "Registrations will open soon. Last date will be announced soon.",
     "organiser": "BITS Pilani – Work Integrated Learning Programmes (WILP)",
     "support_email": "bitswilpautown@wilp.bits-pilani.ac.in",
     "website": "https://bits-pilani-wilp.ac.in/autown/",
@@ -126,6 +126,12 @@
       "fee": "₹500",
       "unit": "per individual participant",
       "icon": "construction"
+    },
+    {
+      "category": "Attendees",
+      "fee": "Free",
+      "unit": "talks, panels and showcases",
+      "icon": "badge"
     }
   ],
   "events": [
@@ -314,25 +320,25 @@
           {
             "id": "att-student",
             "label": "Student",
-            "fee": "As shown on Zoho Backstage",
+            "fee": "Free",
             "zoho_url": ""
           },
           {
             "id": "att-academic",
             "label": "Academician / Researcher",
-            "fee": "As shown on Zoho Backstage",
+            "fee": "Free",
             "zoho_url": ""
           },
           {
             "id": "att-industry",
             "label": "Industry Professional",
-            "fee": "As shown on Zoho Backstage",
+            "fee": "Free",
             "zoho_url": ""
           },
           {
             "id": "att-startup",
             "label": "Startup / Innovator",
-            "fee": "As shown on Zoho Backstage",
+            "fee": "Free",
             "zoho_url": ""
           }
         ]
@@ -513,7 +519,7 @@
     },
     {
       "q": "What are the registration fees?",
-      "a": "Competitions: ₹1,500 per team. Project and Paper Presentations: ₹1,000 per team. Workshops: ₹500 per individual participant."
+      "a": "Competitions: ₹1,500 per team. Project and Paper Presentations: ₹1,000 per team. Workshops: ₹500 per individual participant. Attendees: free."
     },
     {
       "q": "Which tracks can I submit a project or paper under?",
@@ -525,7 +531,7 @@
     },
     {
       "q": "How do I register?",
-      "a": "Click Register, pick Competitions, Workshop or Attendee, choose your event, and complete your registration and payment on Zoho Backstage."
+      "a": "Click Register, pick Competitions, Workshop or Attendee, choose your event, then click Continue to complete your registration. Attendee registration is free."
     },
     {
       "q": "Whom do I contact for questions?",

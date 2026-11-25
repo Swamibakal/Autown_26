@@ -14,7 +14,7 @@ Future<void> showRegisterDialog(BuildContext context, {required Json registratio
   );
 }
 
-/// Registration happens on Zoho Backstage. This dialog only helps people pick
+/// Registration itself happens on Zoho Backstage (link set in content.json). This dialog only helps people pick
 /// the right ticket: Competitions / Workshop / Attendee → event → (track),
 /// then opens the matching Zoho Backstage link in a new tab.
 class RegisterDialog extends StatefulWidget {
@@ -81,7 +81,7 @@ class _RegisterDialogState extends State<RegisterDialog> {
       return;
     }
     final ok = await launchUrl(Uri.parse(url), webOnlyWindowName: '_blank');
-    if (!ok && mounted) setState(() => _error = 'Could not open Zoho Backstage. Please allow pop-ups and try again.');
+    if (!ok && mounted) setState(() => _error = 'Could not open the registration page. Please allow pop-ups and try again.');
   }
 
   @override
@@ -123,7 +123,7 @@ class _RegisterDialogState extends State<RegisterDialog> {
                   const SizedBox(width: 6),
                   Expanded(
                     child: Text(
-                      'You will complete your registration and payment securely on Zoho Backstage. '
+                      'You will complete your registration on the next page. '
                       '${widget.registration['after_note'] ?? ''}',
                       style: bodyStyle(12.5),
                     ),
@@ -256,13 +256,13 @@ class _RegisterDialogState extends State<RegisterDialog> {
         Row(children: [
           const Icon(Icons.payments_outlined, size: 16, color: AppColors.red),
           const SizedBox(width: 6),
-          Expanded(child: Text('Fee: ${o['fee'] ?? 'As shown on Zoho Backstage'}',
+          Expanded(child: Text('Fee: ${o['fee'] ?? 'Shown during registration'}',
               style: bodyStyle(13.5, color: AppColors.text, weight: FontWeight.w600))),
         ]),
         if (sub != null)
           Padding(
             padding: const EdgeInsets.only(top: 6),
-            child: Text('On Zoho Backstage, choose the "${o['label']}" ticket and enter your ${sub['label'].toString().toLowerCase()}.',
+            child: Text('On the next page, choose the "${o['label']}" ticket and enter your ${sub['label'].toString().toLowerCase()}.',
                 style: bodyStyle(12.5)),
           ),
       ]),
