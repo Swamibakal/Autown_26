@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../theme.dart';
@@ -127,6 +128,8 @@ class Section extends StatelessWidget {
 }
 
 /// Lays children out in equal-width columns that collapse on small screens.
+/// Cards in the same row get the same height (the tallest card's real height),
+/// so their edges and bottom buttons line up.
 class ResponsiveGrid extends StatelessWidget {
   const ResponsiveGrid({super.key, required this.children, this.minItemWidth = 280, this.spacing = 20});
 
@@ -139,13 +142,106 @@ class ResponsiveGrid extends StatelessWidget {
     return LayoutBuilder(builder: (context, c) {
       final cols = math.max(1, ((c.maxWidth + spacing) / (minItemWidth + spacing)).floor());
       final itemWidth = (c.maxWidth - spacing * (cols - 1)) / cols;
-      return Wrap(
-        spacing: spacing,
-        runSpacing: spacing,
-        children: [for (final w in children) SizedBox(width: itemWidth, child: w)],
-      );
+      final rows = <Widget>[];
+      for (var i = 0; i < children.length; i += cols) {
+        rows.add(_EqualHeightRow(
+          itemWidth: itemWidth,
+          spacing: spacing,
+          children: children.sublist(i, math.min(i + cols, children.length)),
+        ));
+      }
+      return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        for (var r = 0; r < rows.length; r++) ...[
+          if (r > 0) SizedBox(height: spacing),
+          rows[r],
+        ],
+      ]);
     });
   }
+}
+
+/// Lays each child out at its natural height first, then again at the
+/// tallest child's height, so every card in the row is the same height.
+class _EqualHeightRow extends MultiChildRenderObjectWidget {
+  const _EqualHeightRow({required super.children, required this.itemWidth, required this.spacing});
+
+  final double itemWidth;
+  final double spacing;
+
+  @override
+  RenderObject createRenderObject(BuildContext context) => _RenderEqualHeightRow(itemWidth, spacing);
+
+  @override
+  void updateRenderObject(BuildContext context, _RenderEqualHeightRow renderObject) {
+    renderObject
+      ..itemWidth = itemWidth
+      ..spacing = spacing;
+  }
+}
+
+class _EqualHeightParentData extends ContainerBoxParentData<RenderBox> {}
+
+class _RenderEqualHeightRow extends RenderBox
+    with
+        ContainerRenderObjectMixin<RenderBox, _EqualHeightParentData>,
+        RenderBoxContainerDefaultsMixin<RenderBox, _EqualHeightParentData> {
+  _RenderEqualHeightRow(this._itemWidth, this._spacing);
+
+  double _itemWidth;
+  double _spacing;
+
+  set itemWidth(double v) {
+    if (v == _itemWidth) return;
+    _itemWidth = v;
+    markNeedsLayout();
+  }
+
+  set spacing(double v) {
+    if (v == _spacing) return;
+    _spacing = v;
+    markNeedsLayout();
+  }
+
+  @override
+  void setupParentData(RenderBox child) {
+    if (child.parentData is! _EqualHeightParentData) child.parentData = _EqualHeightParentData();
+  }
+
+  @override
+  void performLayout() {
+    // Pass 1: natural height of every card.
+    var maxHeight = 0.0;
+    var child = firstChild;
+    while (child != null) {
+      child.layout(BoxConstraints(minWidth: _itemWidth, maxWidth: _itemWidth), parentUsesSize: true);
+      maxHeight = math.max(maxHeight, child.size.height);
+      child = childAfter(child);
+    }
+    // Pass 2: every card at least as tall as the tallest one.
+    // The height is a minimum (not a fixed size) on purpose: with a fixed size
+    // Flutter would not re-measure the row when the web font finishes loading
+    // and text re-wraps, which caused the "overflowed" stripes.
+    var x = 0.0;
+    var rowHeight = 0.0;
+    child = firstChild;
+    while (child != null) {
+      child.layout(BoxConstraints(minWidth: _itemWidth, maxWidth: _itemWidth, minHeight: maxHeight),
+          parentUsesSize: true);
+      (child.parentData! as _EqualHeightParentData).offset = Offset(x, 0);
+      rowHeight = math.max(rowHeight, child.size.height);
+      x += _itemWidth + _spacing;
+      child = childAfter(child);
+    }
+    final width = constraints.hasBoundedWidth ? constraints.maxWidth : math.max(0.0, x - _spacing);
+    size = constraints.constrain(Size(width, rowHeight));
+  }
+
+  @override
+  void paint(PaintingContext context, Offset offset) => defaultPaint(context, offset);
+
+  @override
+  bool hitTestChildren(BoxHitTestResult result, {required Offset position}) =>
+      defaultHitTestChildren(result, position: position);
 }
 
 /// Card that lifts and gets a coloured edge on hover.

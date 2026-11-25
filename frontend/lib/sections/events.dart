@@ -149,7 +149,13 @@ class _EventCard extends StatelessWidget {
     final partner = (event['partner'] ?? '').toString();
     return HoverCard(
       accent: color,
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      // Top part (details) and bottom part (fee + Register) are pushed apart,
+      // so Register buttons line up across a row of equal-height cards.
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+      Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisSize: MainAxisSize.min, children: [
         Row(children: [
           IconBadge(iconFor(event['icon']), color: color),
           const Spacer(),
@@ -171,6 +177,8 @@ class _EventCard extends StatelessWidget {
           const SizedBox(height: 14),
           _TrackCoordinators(tracks: listOf(event['track_coordinators'])),
         ],
+      ]),
+      Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisSize: MainAxisSize.min, children: [
         const SizedBox(height: 14),
         Row(children: [
           const Icon(Icons.payments_outlined, size: 17, color: AppColors.primary),
@@ -192,6 +200,8 @@ class _EventCard extends StatelessWidget {
           ),
         ),
       ]),
+        ],
+      ),
     );
   }
 }
