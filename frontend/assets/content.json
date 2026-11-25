@@ -143,7 +143,33 @@
       "partner": "",
       "fee": "₹1,500 per team",
       "team": true,
-      "category": "Competition"
+      "category": "Competition",
+      "coordinators": [
+        {
+          "names": "Dr. K. Lakshmi Prasanna",
+          "phones": [
+            "8179576005"
+          ]
+        },
+        {
+          "names": "Mr. Abhinesh",
+          "phones": [
+            "9944737828"
+          ]
+        },
+        {
+          "names": "Mr. Manish",
+          "phones": [
+            "9131391650"
+          ]
+        },
+        {
+          "names": "Mr. Aravind",
+          "phones": [
+            "6301033218"
+          ]
+        }
+      ]
     },
     {
       "id": "hackathon",
@@ -153,7 +179,15 @@
       "partner": "In collaboration with Microchip",
       "fee": "₹1,500 per team",
       "team": true,
-      "category": "Competition"
+      "category": "Competition",
+      "coordinators": [
+        {
+          "names": "Dr. Goutham Makena",
+          "phones": [
+            "9951696086"
+          ]
+        }
+      ]
     },
     {
       "id": "ctf",
@@ -163,7 +197,27 @@
       "partner": "In collaboration with ARAI",
       "fee": "₹1,500 per team",
       "team": true,
-      "category": "Competition"
+      "category": "Competition",
+      "coordinators": [
+        {
+          "names": "Dr. Ramya",
+          "phones": [
+            "7338824114"
+          ]
+        },
+        {
+          "names": "Advaith",
+          "phones": [
+            "7798988205"
+          ]
+        },
+        {
+          "names": "Balaji",
+          "phones": [
+            "8074150472"
+          ]
+        }
+      ]
     },
     {
       "id": "vr",
@@ -173,7 +227,21 @@
       "partner": "",
       "fee": "₹1,500 per team",
       "team": true,
-      "category": "Competition"
+      "category": "Competition",
+      "coordinators": [
+        {
+          "names": "Divesh",
+          "phones": [
+            "9811972420"
+          ]
+        },
+        {
+          "names": "Kaaviya",
+          "phones": [
+            "7708285344"
+          ]
+        }
+      ]
     },
     {
       "id": "project",
@@ -183,7 +251,75 @@
       "partner": "",
       "fee": "₹1,000 per team",
       "team": true,
-      "category": "Presentation"
+      "category": "Presentation",
+      "track_coordinators": [
+        {
+          "track": "Autonomous Systems",
+          "names": "Prof. Aditya Balu; Prof. Ariful Mashud; Prof. Lakshmi Prasanna",
+          "phones": [
+            "8638096653",
+            "8179576005"
+          ]
+        },
+        {
+          "track": "AI & Machine Learning",
+          "names": "Prof. Harish Kumar JR; Donald Johnson; Prof. Nilanjan Mukherjee",
+          "phones": [
+            "9945575205",
+            "8667023141",
+            "8582880139"
+          ]
+        },
+        {
+          "track": "Automotive Cybersecurity",
+          "names": "Prof. Ramya; Mr. Advait; Mr. Balaji",
+          "phones": [
+            "7338824114",
+            "7798988205",
+            "8074150472"
+          ]
+        },
+        {
+          "track": "Electric & Hybrid Vehicles",
+          "names": "Prof. Sameer Gupta; P. Jayvardhan",
+          "phones": [
+            "9975545741",
+            "8886097055"
+          ]
+        },
+        {
+          "track": "Automotive & Allied Domain",
+          "names": "Prof. Glynn John; P. Jayvardhan",
+          "phones": [
+            "8681929774",
+            "8886097055"
+          ]
+        },
+        {
+          "track": "Software-Defined Vehicles",
+          "names": "Prof. S. Raghuraman; Mr. Sivaramakrishna",
+          "phones": [
+            "8939080025",
+            "8056448976"
+          ]
+        },
+        {
+          "track": "Automotive Embedded Systems",
+          "names": "Prof. Satisha; Ms. Druthi",
+          "phones": [
+            "9448109798",
+            "7036489878"
+          ]
+        },
+        {
+          "track": "Automotive Communication",
+          "names": "Prof. Kranthi Kumar Palavalasa; Naveen Kanuri",
+          "phones": [
+            "8951157158",
+            "8096375215"
+          ]
+        }
+      ]
     },
     {
       "id": "paper",
@@ -193,7 +329,75 @@
       "partner": "",
       "fee": "₹1,000 per team",
       "team": true,
-      "category": "Presentation"
+      "category": "Presentation",
+      "track_coordinators": [
+        {
+          "track": "Autonomous Systems",
+          "names": "Prof. Aditya Balu; Prof. Ariful Mashud; Prof. Lakshmi Prasanna",
+          "phones": [
+            "8638096653",
+            "8179576005"
+          ]
+        },
+        {
+          "track": "AI & Machine Learning",
+          "names": "Prof. Harish Kumar JR; Donald Johnson; Prof. Nilanjan Mukherjee",
+          "phones": [
+            "9945575205",
+            "8667023141",
+            "8582880139"
+          ]
+        },
+        {
+          "track": "Automotive Cybersecurity",
+          "names": "Prof. Ramya; Mr. Advait; Mr. Balaji",
+          "phones": [
+            "7338824114",
+            "7798988205",
+            "8074150472"
+          ]
+        },
+        {
+          "track": "Electric & Hybrid Vehicles",
+          "names": "Prof. Sameer Gupta; P. Jayvardhan",
+          "phones": [
+            "9975545741",
+            "8886097055"
+          ]
+        },
+        {
+          "track": "Automotive & Allied Domain",
+          "names": "Prof. Glynn John; P. Jayvardhan",
+          "phones": [
+            "8681929774",
+            "8886097055"
+          ]
+        },
+        {
+          "track": "Software-Defined Vehicles",
+          "names": "Prof. S. Raghuraman; Mr. Sivaramakrishna",
+          "phones": [
+            "8939080025",
+            "8056448976"
+          ]
+        },
+        {
+          "track": "Automotive Embedded Systems",
+          "names": "Prof. Satisha; Ms. Druthi",
+          "phones": [
+            "9448109798",
+            "7036489878"
+          ]
+        },
+        {
+          "track": "Automotive Communication",
+          "names": "Prof. Kranthi Kumar Palavalasa; Naveen Kanuri",
+          "phones": [
+            "8951157158",
+            "8096375215"
+          ]
+        }
+      ]
     },
     {
       "id": "ws-drone",
@@ -203,7 +407,15 @@
       "partner": "Proposed association with TiHAN",
       "fee": "₹500 per participant",
       "team": false,
-      "category": "Workshop"
+      "category": "Workshop",
+      "coordinators": [
+        {
+          "names": "Prof. Goutham",
+          "phones": [
+            "9951696086"
+          ]
+        }
+      ]
     },
     {
       "id": "ws-cyber",
@@ -213,13 +425,21 @@
       "partner": "Proposed association with Bosch",
       "fee": "₹500 per participant",
       "team": false,
-      "category": "Workshop"
+      "category": "Workshop",
+      "coordinators": [
+        {
+          "names": "Prof. Ramya",
+          "phones": [
+            "7338824114"
+          ]
+        }
+      ]
     }
   ],
   "registration": {
     "_help": "Paste your Zoho Backstage links here. 'zoho_event_url' is used for every option whose own 'zoho_url' is empty. Leave an option's zoho_url empty to use the main link.",
     "zoho_event_url": "",
-    "after_note": "Track, competition and workshop coordinator contacts will be shared with you after registration.",
+    "after_note": "",
     "tabs": [
       {
         "id": "competitions",
@@ -535,7 +755,57 @@
     },
     {
       "q": "Whom do I contact for questions?",
-      "a": "Write to bitswilpautown@wilp.bits-pilani.ac.in or call the coordinators, Prof. Rakesh Chandra Dash (8249073596) and Prof. Niranjan Raj (8256916189). Coordinator contacts for your track, competition or workshop are shared after registration."
+      "a": "Write to bitswilpautown@wilp.bits-pilani.ac.in or call the coordinators, Prof. Rakesh Chandra Dash (8249073596) and Prof. Niranjan Raj (8256916189). Each competition, workshop and presentation track also lists its own coordinators in the Events section."
     }
-  ]
+  ],
+  "gallery": {
+    "title": "Moments from the previous AUTOwn",
+    "_help": "Photos live in assets/images/gallery/. Add or remove entries here to change the slideshow.",
+    "images": [
+      {
+        "file": "gallery_autown25_group.jpg",
+        "caption": "AUTOwn'25 participants, organisers and faculty"
+      },
+      {
+        "file": "gallery_01.jpg",
+        "caption": "Participants and organisers at AUTOwn"
+      },
+      {
+        "file": "gallery_02.jpg",
+        "caption": "Closing ceremony"
+      },
+      {
+        "file": "gallery_03.jpg",
+        "caption": "Keynote address"
+      },
+      {
+        "file": "gallery_04.jpg",
+        "caption": "Panel discussion on automotive technology"
+      },
+      {
+        "file": "gallery_05.jpg",
+        "caption": "Students presenting their work"
+      },
+      {
+        "file": "gallery_06.jpg",
+        "caption": "Interaction at the exhibition"
+      },
+      {
+        "file": "gallery_07.jpg",
+        "caption": "Attendees exploring smart-mobility exhibits"
+      },
+      {
+        "file": "gallery_08.jpg",
+        "caption": "Hands-on workshop session"
+      },
+      {
+        "file": "gallery_09.jpg",
+        "caption": "Interactive learning session"
+      },
+      {
+        "file": "gallery_10.jpg",
+        "caption": "AI and mobility workshop"
+      }
+    ]
+  }
 }

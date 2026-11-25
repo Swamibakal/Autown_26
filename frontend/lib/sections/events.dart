@@ -163,6 +163,14 @@ class _EventCard extends StatelessWidget {
         ],
         const SizedBox(height: 8),
         Text(event['text'] ?? '', style: bodyStyle(14.5)),
+        if (listOf(event['coordinators']).isNotEmpty) ...[
+          const SizedBox(height: 14),
+          _Coordinators(coordinators: listOf(event['coordinators'])),
+        ],
+        if (listOf(event['track_coordinators']).isNotEmpty) ...[
+          const SizedBox(height: 14),
+          _TrackCoordinators(tracks: listOf(event['track_coordinators'])),
+        ],
         const SizedBox(height: 14),
         Row(children: [
           const Icon(Icons.payments_outlined, size: 17, color: AppColors.primary),
@@ -184,6 +192,105 @@ class _EventCard extends StatelessWidget {
           ),
         ),
       ]),
+    );
+  }
+}
+
+/// Tap-to-call phone number.
+class _Phone extends StatelessWidget {
+  const _Phone(this.number);
+  final String number;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () => openUrl('tel:$number'),
+      borderRadius: BorderRadius.circular(6),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 2),
+        child: Row(mainAxisSize: MainAxisSize.min, children: [
+          const Icon(Icons.phone_outlined, size: 14, color: AppColors.red),
+          const SizedBox(width: 4),
+          Text(number, style: bodyStyle(13, color: AppColors.primary, weight: FontWeight.w600)),
+        ]),
+      ),
+    );
+  }
+}
+
+/// Coordinator names and numbers for a competition or workshop.
+class _Coordinators extends StatelessWidget {
+  const _Coordinators({required this.coordinators});
+  final List<Json> coordinators;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.fromLTRB(14, 12, 14, 10),
+      decoration: BoxDecoration(
+        color: fade(AppColors.peach, 0.30),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Text('COORDINATORS', style: bodyStyle(11, color: AppColors.red, weight: FontWeight.w800).copyWith(letterSpacing: 2)),
+        const SizedBox(height: 6),
+        for (final c in coordinators)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 4),
+            child: Wrap(
+              crossAxisAlignment: WrapCrossAlignment.center,
+              spacing: 10,
+              runSpacing: 2,
+              children: [
+                Text(c['names'] ?? '', style: bodyStyle(13.5, color: AppColors.text, weight: FontWeight.w600)),
+                for (final ph in (c['phones'] as List? ?? [])) _Phone(ph.toString()),
+              ],
+            ),
+          ),
+      ]),
+    );
+  }
+}
+
+/// Expandable list of track coordinators for the presentation cards.
+class _TrackCoordinators extends StatelessWidget {
+  const _TrackCoordinators({required this.tracks});
+  final List<Json> tracks;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: fade(AppColors.peach, 0.30),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Theme(
+        data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+        child: ExpansionTile(
+          dense: true,
+          tilePadding: const EdgeInsets.symmetric(horizontal: 14),
+          childrenPadding: const EdgeInsets.fromLTRB(14, 0, 14, 12),
+          iconColor: AppColors.red,
+          collapsedIconColor: AppColors.primary,
+          expandedCrossAxisAlignment: CrossAxisAlignment.start,
+          title: Text('TRACK COORDINATORS',
+              style: bodyStyle(11, color: AppColors.red, weight: FontWeight.w800).copyWith(letterSpacing: 2)),
+          children: [
+            for (final t in tracks)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  Text(t['track'] ?? '', style: bodyStyle(13.5, color: AppColors.primary, weight: FontWeight.w700)),
+                  Text(t['names'] ?? '', style: bodyStyle(13, color: AppColors.text)),
+                  Wrap(spacing: 10, children: [
+                    for (final ph in (t['phones'] as List? ?? [])) _Phone(ph.toString()),
+                  ]),
+                ]),
+              ),
+          ],
+        ),
+      ),
     );
   }
 }

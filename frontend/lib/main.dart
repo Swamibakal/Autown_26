@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'content.dart';
 import 'sections/contact.dart';
 import 'sections/events.dart';
+import 'sections/gallery.dart';
 import 'sections/hero.dart';
 import 'sections/info_sections.dart';
 import 'theme.dart';
@@ -25,7 +26,7 @@ class AutownApp extends StatelessWidget {
   }
 }
 
-const navItems = ['Home', 'About', 'Tracks', 'Events', 'Schedule', 'Speakers', 'Sponsors', 'Contact', 'FAQ'];
+const navItems = ['Home', 'About', 'Tracks', 'Events', 'Schedule', 'Gallery', 'Speakers', 'Sponsors', 'Contact', 'FAQ'];
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -101,6 +102,7 @@ class _HomePageState extends State<HomePage> {
               onRegister: register,
             )),
             anchor('Schedule', ScheduleSection(days: listOf(site['schedule']))),
+            anchor('Gallery', GallerySection(gallery: (site['gallery'] ?? <String, dynamic>{}) as Json)),
             anchor('Speakers', SpeakersSection(speakers: listOf(site['speakers']))),
             anchor('Sponsors', SponsorshipSection(data: site['sponsorship'], onContact: () => _goTo('Contact'))),
             anchor('Contact', ContactSection(
@@ -119,7 +121,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _navBar(void Function([String?]) register) {
-    final mobile = MediaQuery.sizeOf(context).width < 1100;
+    final mobile = MediaQuery.sizeOf(context).width < 1300; // menu button below this width
     return AnimatedContainer(
       duration: const Duration(milliseconds: 250),
       padding: EdgeInsets.symmetric(horizontal: mobile ? 16 : 36, vertical: _scrolled ? 10 : 18),
