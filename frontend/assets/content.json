@@ -9,11 +9,12 @@
     "pre_event_label": "Pre-event workshops: Friday, 12 February 2027",
     "venue_short": "BITS Pilani, Hyderabad Campus",
     "prize_pool": "₹4,00,000",
-    "registration_notice": "Registrations will open soon. Last date will be announced soon.",
+    "registration_notice": "Registrations are open! Last date to register: 10 February 2027.",
     "organiser": "BITS Pilani – Work Integrated Learning Programmes (WILP)",
     "support_email": "bitswilpautown@wilp.bits-pilani.ac.in",
     "website": "https://bits-pilani-wilp.ac.in/autown/",
-    "prize_label": "Prize money up to"
+    "prize_label": "Prize money up to",
+    "registration_deadline": "10 February 2027"
   },
   "vision": {
     "text": "To connect academia and industry in advancing intelligent automotive technologies, bringing together innovation in autonomous systems, AI and machine learning, automotive cybersecurity, electric and hybrid vehicles, embedded systems, automotive communication, software-defined vehicles, and allied domains.",
@@ -765,6 +766,10 @@
     {
       "q": "How do I register?",
       "a": "Click Register, pick Competitions, Workshop or Attendee, choose your event, then click Continue to complete your registration. Attendee registration is free."
+    },
+    {
+      "q": "What is the last date to register?",
+      "a": "The last date to register for competitions, presentations, workshops and as an attendee is 10 February 2027."
     },
     {
       "q": "Whom do I contact for questions?",
