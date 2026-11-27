@@ -67,12 +67,46 @@ class _RegisterDialogState extends State<RegisterDialog> {
     return (widget.registration['zoho_event_url'] ?? '').toString().trim();
   }
 
+  /// Payment link for the chosen option (its own "payment_url", else the
+  /// default "payment_url" in the registration block). Empty = no payment step.
+  String get _paymentUrl {
+    final own = (_option?['payment_url'] ?? '').toString().trim();
+    if (own.isNotEmpty) return own;
+    return (widget.registration['payment_url'] ?? '').toString().trim();
+  }
+
+  bool get _isFree => (_option?['fee'] ?? '').toString().toLowerCase().startsWith('free');
+
+  /// Paid options with a payment link use two steps: 1. Pay, 2. Register.
+  bool get _twoStep => _option != null && !_isFree && _paymentUrl.isNotEmpty;
+
+  bool _payOpened = false; // "Pay now" was clicked
+  bool _registered = false;
+
+  /// "register_first" (default) or "pay_first", from content.json.
+  bool get _registerFirst => (widget.registration['payment_order'] ?? 'register_first') != 'pay_first';
+
   void _selectTab(int i) => setState(() {
         _tab = i;
         _optionId = null;
         _sub = null;
         _error = null;
+        _payOpened = false;
+        _registered = false;
       });
+
+  Future<void> _pay() async {
+    final ok = await launchUrl(Uri.parse(_paymentUrl), webOnlyWindowName: '_blank');
+    if (!mounted) return;
+    if (ok) {
+      setState(() {
+        _payOpened = true;
+        _error = null;
+      });
+    } else {
+      setState(() => _error = 'Could not open the payment page. Please allow pop-ups and try again.');
+    }
+  }
 
   Future<void> _continue() async {
     final url = _zohoUrl;
@@ -112,29 +146,158 @@ class _RegisterDialogState extends State<RegisterDialog> {
                   Text(_error!, style: bodyStyle(13.5, color: AppColors.red, weight: FontWeight.w600)),
                 ],
                 const SizedBox(height: 22),
-                FilledButton.icon(
-                  onPressed: _ready ? _continue : null,
-                  icon: const Icon(Icons.open_in_new),
-                  label: const Text('Continue'),
-                ),
-                const SizedBox(height: 12),
-                Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  const Icon(Icons.lock_outline, size: 15, color: AppColors.muted),
-                  const SizedBox(width: 6),
-                  Expanded(
-                    child: Text(
-                      'You will complete your registration on the next page. '
-                      '${widget.registration['after_note'] ?? ''}',
-                      style: bodyStyle(12.5),
-                    ),
+                if (_twoStep) ..._twoStepActions() else ...[
+                  FilledButton.icon(
+                    onPressed: _ready ? _continue : null,
+                    icon: const Icon(Icons.open_in_new),
+                    label: const Text('Continue'),
                   ),
-                ]),
+                  const SizedBox(height: 12),
+                  Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                    const Icon(Icons.lock_outline, size: 15, color: AppColors.muted),
+                    const SizedBox(width: 6),
+                    Expanded(
+                      child: Text(
+                        'You will complete your registration on the next page. '
+                        '${widget.registration['after_note'] ?? ''}',
+                        style: bodyStyle(12.5),
+                      ),
+                    ),
+                  ]),
+                ],
               ]),
             ),
           ]),
         ),
       ),
     );
+  }
+
+  /// Step 1: pay with the event's payment link. Step 2: register.
+  List<Widget> _twoStepActions() {
+    final payNote = (widget.registration['payment_note'] ??
+            'Keep your transaction / reference number. You will enter it in the registration form.')
+        .toString();
+    Widget step(int n, String title, String note, Widget button, {bool done = false}) => Container(
+          padding: const EdgeInsets.all(14),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: done ? AppColors.green : AppColors.border),
+          ),
+          child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            CircleAvatar(
+              radius: 14,
+              backgroundColor: done ? AppColors.green : AppColors.primary,
+              child: done
+                  ? const Icon(Icons.check, size: 16, color: Colors.white)
+                  : Text('$n', style: bodyStyle(13, color: Colors.white, weight: FontWeight.w800)),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+                Text(title, style: bodyStyle(15, color: AppColors.primary, weight: FontWeight.w700)),
+                const SizedBox(height: 2),
+                Text(note, style: bodyStyle(12.5)),
+                const SizedBox(height: 10),
+                button,
+              ]),
+            ),
+          ]),
+        );
+
+    final payButton = OutlinedButton.icon(
+      onPressed: _ready ? _pay : null,
+      icon: const Icon(Icons.payments_outlined),
+      label: const Text('Pay now'),
+    );
+
+    if (_registerFirst) {
+      // 1. Register on Zoho Backstage  →  2. Pay with the event payment link
+      final payNoteAfter = (widget.registration['payment_note_after'] ??
+              'Use the same name and email as your registration, and mention your registration ID in the payment remarks.')
+          .toString();
+      return [
+        step(
+          1,
+          'Complete your registration',
+          'Fill in your details on the registration page. ${widget.registration['after_note'] ?? ''}',
+          FilledButton.icon(
+            onPressed: _ready
+                ? () async {
+                    await _continue();
+                    if (mounted && _error == null) setState(() => _registered = true);
+                  }
+                : null,
+            icon: const Icon(Icons.open_in_new),
+            label: const Text('Continue'),
+          ),
+          done: _registered,
+        ),
+        const SizedBox(height: 12),
+        step(
+          2,
+          'Pay the registration fee (${_option!['fee']})',
+          payNoteAfter,
+          Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+            CheckboxListTile(
+              value: _registered,
+              onChanged: (v) => setState(() => _registered = v ?? false),
+              dense: true,
+              contentPadding: EdgeInsets.zero,
+              controlAffinity: ListTileControlAffinity.leading,
+              activeColor: AppColors.primary,
+              title: Text('I have completed the registration', style: bodyStyle(13.5, color: AppColors.text)),
+            ),
+            OutlinedButton.icon(
+              onPressed: _ready && _registered ? _pay : null,
+              icon: const Icon(Icons.payments_outlined),
+              label: const Text('Pay now'),
+            ),
+          ]),
+        ),
+      ];
+    }
+
+    // 1. Pay with the event payment link  →  2. Register on Zoho Backstage.
+    // Payment is verified by the organisers in Zoho (registration approval),
+    // so the website only guides the order of steps.
+    final verifyNote = (widget.registration['verification_note'] ??
+            'Your registration will be confirmed by email once the organisers verify your payment.')
+        .toString();
+    return [
+      step(1, 'Pay the registration fee (${_option!['fee']})', payNote, payButton, done: _payOpened),
+      const SizedBox(height: 12),
+      step(
+        2,
+        'Complete your registration',
+        'Fill in your details and enter your PayU payment reference number. ${widget.registration['after_note'] ?? ''}',
+        Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+          if (!_payOpened)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8),
+              child: Text('Click "Pay now" first.', style: bodyStyle(12, color: AppColors.red)),
+            ),
+          FilledButton.icon(
+            onPressed: _ready && _payOpened ? _continue : null,
+            icon: const Icon(Icons.open_in_new),
+            label: const Text('Continue'),
+          ),
+        ]),
+      ),
+      const SizedBox(height: 12),
+      Container(
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          color: fade(AppColors.sky, 0.15),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          const Icon(Icons.verified_user_outlined, size: 18, color: AppColors.primary),
+          const SizedBox(width: 8),
+          Expanded(child: Text(verifyNote, style: bodyStyle(12.5, color: AppColors.text))),
+        ]),
+      ),
+    ];
   }
 
   Widget _header(bool mobile) => Container(
@@ -215,6 +378,8 @@ class _RegisterDialogState extends State<RegisterDialog> {
           _optionId = v;
           _sub = null;
           _error = null;
+          _payOpened = false;
+          _registered = false;
         }),
       ),
       if (sub != null) ...[

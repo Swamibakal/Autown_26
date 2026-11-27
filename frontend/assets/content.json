@@ -437,8 +437,13 @@
     }
   ],
   "registration": {
-    "_help": "Paste your Zoho Backstage links here. 'zoho_event_url' is used for every option whose own 'zoho_url' is empty. Leave an option's zoho_url empty to use the main link.",
-    "zoho_event_url": "",
+    "_help": "Paste your Zoho Backstage links here. 'zoho_event_url' is used for every option whose own 'zoho_url' is empty. Payment: put your payment link in 'payment_url' (used by all paid options), or in an option's own 'payment_url' if each fee has its own link. Paid options with a payment link show two steps: 1. Pay now, 2. Continue to register. Free options (fee starting with 'Free') skip the payment step. 'payment_order': 'register_first' = register on Zoho, then pay; 'pay_first' = pay, then register.",
+    "zoho_event_url": "https://autown-25.zohobackstage.in/AUTOWN26#/tickets?lang=en",
+    "payment_url": "",
+    "payment_order": "pay_first",
+    "payment_note": "Keep your PayU payment reference number. You will enter it in the registration form.",
+    "payment_note_after": "Use the same name and email as your registration, and mention your registration ID in the payment remarks.",
+    "verification_note": "Your registration will be confirmed by email once the organisers verify your payment.",
     "after_note": "",
     "tabs": [
       {
@@ -451,25 +456,29 @@
             "id": "minicar",
             "label": "Autonomous Mini Car Racing",
             "fee": "₹1,500 per team",
-            "zoho_url": ""
+            "zoho_url": "",
+            "payment_url": "https://u.payu.in/PAYUMN/yIgPd9PwKftl"
           },
           {
             "id": "hackathon",
             "label": "Embedded Systems Hackathon",
             "fee": "₹1,500 per team",
-            "zoho_url": ""
+            "zoho_url": "",
+            "payment_url": "https://u.payu.in/PAYUMN/yIgPd9PwKftl"
           },
           {
             "id": "ctf",
             "label": "HackArena CTF: Capture the Flag",
             "fee": "₹1,500 per team",
-            "zoho_url": ""
+            "zoho_url": "",
+            "payment_url": "https://u.payu.in/PAYUMN/yIgPd9PwKftl"
           },
           {
             "id": "vr",
             "label": "VR Simulator for Autonomous Vehicles",
             "fee": "₹1,500 per team",
-            "zoho_url": ""
+            "zoho_url": "",
+            "payment_url": "https://u.payu.in/PAYUMN/yIgPd9PwKftl"
           },
           {
             "id": "project",
@@ -488,7 +497,8 @@
                 "Automotive Embedded Systems",
                 "Automotive Communication"
               ]
-            }
+            },
+            "payment_url": "https://u.payu.in/PAYUMN/LrkhIG0eKX6n"
           },
           {
             "id": "paper",
@@ -507,7 +517,8 @@
                 "Automotive Embedded Systems",
                 "Automotive Communication"
               ]
-            }
+            },
+            "payment_url": "https://u.payu.in/PAYUMN/LrkhIG0eKX6n"
           }
         ]
       },
@@ -521,13 +532,15 @@
             "id": "ws-drone",
             "label": "Drone / Autonomous Systems Workshop",
             "fee": "₹500 per participant",
-            "zoho_url": ""
+            "zoho_url": "",
+            "payment_url": "https://u.payu.in/PAYUMN/KrWLVogxTw8Z"
           },
           {
             "id": "ws-cyber",
             "label": "Automotive Cybersecurity Workshop",
             "fee": "₹500 per participant",
-            "zoho_url": ""
+            "zoho_url": "",
+            "payment_url": "https://u.payu.in/PAYUMN/KrWLVogxTw8Z"
           }
         ]
       },

@@ -1,0 +1,823 @@
+{
+  "event": {
+    "name": "AUTOwn'26",
+    "theme": "Connecting Industry Innovation with Intelligent Automotive Excellence",
+    "tagline": "Project & Poster Presentations | Competitions | Technical Workshops",
+    "start_date": "2027-02-13T09:30:00+05:30",
+    "end_date": "2027-02-14T17:00:00+05:30",
+    "date_label": "13–14 February 2027",
+    "pre_event_label": "Pre-event workshops: Friday, 12 February 2027",
+    "venue_short": "BITS Pilani, Hyderabad Campus",
+    "prize_pool": "₹4,00,000",
+    "registration_notice": "Registrations will open soon. Last date will be announced soon.",
+    "organiser": "BITS Pilani – Work Integrated Learning Programmes (WILP)",
+    "support_email": "bitswilpautown@wilp.bits-pilani.ac.in",
+    "website": "https://bits-pilani-wilp.ac.in/autown/",
+    "prize_label": "Prize money up to"
+  },
+  "vision": {
+    "text": "To connect academia and industry in advancing intelligent automotive technologies, bringing together innovation in autonomous systems, AI and machine learning, automotive cybersecurity, electric and hybrid vehicles, embedded systems, automotive communication, software-defined vehicles, and allied domains.",
+    "objectives": [
+      {
+        "icon": "lightbulb",
+        "title": "Innovation & Research",
+        "text": "Encourage innovation and research across the AUTOwn'26 project and paper presentation tracks."
+      },
+      {
+        "icon": "hub",
+        "title": "Real-World Impact",
+        "text": "Connect academic work with real-world automotive and mobility challenges."
+      },
+      {
+        "icon": "build",
+        "title": "Hands-on Learning",
+        "text": "Promote hands-on learning through technical competitions and industry-oriented workshops."
+      },
+      {
+        "icon": "groups",
+        "title": "Collaboration",
+        "text": "Create opportunities for students, researchers, and professionals to exchange ideas and collaborate."
+      }
+    ]
+  },
+  "about": {
+    "text": "AUTOwn'26 brings together students, researchers, academicians, and industry professionals to explore the technologies shaping next-generation vehicles. Through project and paper presentations, competitions, and technical workshops, the event highlights innovation across intelligent, connected, secure, and software-driven automotive systems.",
+    "who_should_attend": "Engineering students and teams, researchers, academicians, working professionals, automotive and embedded engineers, cybersecurity practitioners, AI/ML developers, robotics enthusiasts, startups, and innovators working in automotive and allied domains.",
+    "highlights": [
+      {
+        "icon": "article",
+        "text": "Project and paper presentations across eight automotive technology tracks."
+      },
+      {
+        "icon": "sports_motorsports",
+        "text": "Technical competitions: Autonomous Mini Car Racing, Embedded Systems Hackathon, HackArena CTF and VR Simulator for Autonomous Vehicles."
+      },
+      {
+        "icon": "construction",
+        "text": "Proposed technical workshops in autonomous systems, automotive cybersecurity, robotics, AUTOSAR/automotive software, and model-based design."
+      },
+      {
+        "icon": "emoji_events",
+        "text": "Industry–academia interaction and a combined prize pool of ₹4,00,000."
+      },
+      {
+        "icon": "forum",
+        "text": "Panel Discussions & Expert Talks: insights from industry experts through engaging panel discussions and technical sessions."
+      }
+    ]
+  },
+  "tracks": [
+    {
+      "icon": "directions_car",
+      "title": "Autonomous Systems",
+      "text": "Autonomous navigation, perception, sensor fusion, path planning, vehicle control, and collision avoidance."
+    },
+    {
+      "icon": "smart_toy",
+      "title": "AI & Machine Learning",
+      "text": "AI-based perception, driver assistance, predictive maintenance, edge AI, and intelligent automotive decision-making."
+    },
+    {
+      "icon": "security",
+      "title": "Automotive Cybersecurity",
+      "text": "Security of ECUs, in-vehicle networks, connected vehicles, V2X systems, and EV charging infrastructure."
+    },
+    {
+      "icon": "ev_station",
+      "title": "Electric & Hybrid Vehicles",
+      "text": "Battery management, energy optimisation, charging systems, regenerative braking, and EV safety."
+    },
+    {
+      "icon": "precision_manufacturing",
+      "title": "Automotive & Allied Domain",
+      "text": "Vehicle dynamics, driver and occupant safety, robotics, smart infrastructure, manufacturing, and related engineering."
+    },
+    {
+      "icon": "memory",
+      "title": "Software-Defined Vehicles",
+      "text": "Vehicle software architecture, zonal ECUs, over-the-air updates, virtual ECUs, and software validation."
+    },
+    {
+      "icon": "developer_board",
+      "title": "Automotive Embedded Systems",
+      "text": "Embedded Systems for Next-Generation Vehicles: real-time embedded control, automotive ECUs, AUTOSAR, microcontrollers, diagnostics, and hardware–software integration."
+    },
+    {
+      "icon": "cell_tower",
+      "title": "Automotive Communication",
+      "text": "Real-Time AI Inference at the Vehicle/Edge, Real-Time Communication, and Energy-Efficient AI Accelerators: Automotive Ethernet, low-latency networking, V2X, edge AI inference, communication-aware scheduling, and energy-efficient AI acceleration."
+    }
+  ],
+  "fees": [
+    {
+      "category": "Competitions",
+      "fee": "₹1,500",
+      "unit": "per team",
+      "icon": "sports_motorsports"
+    },
+    {
+      "category": "Project & Paper Presentations",
+      "fee": "₹1,000",
+      "unit": "per team",
+      "icon": "co_present"
+    },
+    {
+      "category": "Workshops",
+      "fee": "₹500",
+      "unit": "per individual participant",
+      "icon": "construction"
+    },
+    {
+      "category": "Attendees",
+      "fee": "Free",
+      "unit": "talks, panels and showcases",
+      "icon": "badge"
+    }
+  ],
+  "events": [
+    {
+      "id": "minicar",
+      "icon": "sports_motorsports",
+      "title": "Autonomous Mini Car Racing",
+      "text": "Design and program mini cars to navigate a defined track using sensing, path planning, obstacle avoidance, and embedded control.",
+      "partner": "",
+      "fee": "₹1,500 per team",
+      "team": true,
+      "category": "Competition",
+      "coordinators": [
+        {
+          "names": "Ms. K. Lakshmi Prasanna",
+          "phones": [
+            "8179576005"
+          ]
+        },
+        {
+          "names": "Mr. Abhinesh",
+          "phones": [
+            "9944737828"
+          ]
+        },
+        {
+          "names": "Mr. Manish",
+          "phones": [
+            "9131391650"
+          ]
+        },
+        {
+          "names": "Mr. Aravind",
+          "phones": [
+            "6301033218"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hackathon",
+      "icon": "developer_board",
+      "title": "Embedded Systems Hackathon",
+      "text": "Build a working embedded solution through a time-bound hardware–software challenge.",
+      "partner": "In collaboration with Microchip",
+      "fee": "₹1,500 per team",
+      "team": true,
+      "category": "Competition",
+      "coordinators": [
+        {
+          "names": "Mr. Goutham Makena",
+          "phones": [
+            "9951696086"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ctf",
+      "icon": "flag",
+      "title": "HackArena CTF: Capture the Flag",
+      "text": "Solve cybersecurity challenges involving areas such as network security, cryptography, vulnerability analysis, and secure systems in an authorised environment.",
+      "partner": "In collaboration with ARAI",
+      "fee": "₹1,500 per team",
+      "team": true,
+      "category": "Competition",
+      "coordinators": [
+        {
+          "names": "Ms. Ramya",
+          "phones": [
+            "7338824114"
+          ]
+        },
+        {
+          "names": "Mr. Advaith",
+          "phones": [
+            "7798988205"
+          ]
+        },
+        {
+          "names": "Mr. Balaji",
+          "phones": [
+            "8074150472"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "vr",
+      "icon": "view_in_ar",
+      "title": "VR Simulator for Autonomous Vehicles",
+      "text": "Build a VR simulator to safely train and test autonomous vehicles before real-world deployment.",
+      "partner": "",
+      "fee": "₹1,500 per team",
+      "team": true,
+      "category": "Competition",
+      "coordinators": [
+        {
+          "names": "Mr. Divesh",
+          "phones": [
+            "9811972420"
+          ]
+        },
+        {
+          "names": "Ms. Kaaviya",
+          "phones": [
+            "7708285344"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "project",
+      "icon": "co_present",
+      "title": "Project & Poster Presentation",
+      "text": "Showcase your project or poster under any of the eight AUTOwn'26 tracks.",
+      "partner": "",
+      "fee": "₹1,000 per team",
+      "team": true,
+      "category": "Presentation",
+      "track_coordinators": [
+        {
+          "track": "Autonomous Systems",
+          "names": "Mr. Aditya Balu; Mr. Ariful Mashud; Ms. Lakshmi Prasanna",
+          "phones": [
+            "8638096653",
+            "8179576005"
+          ]
+        },
+        {
+          "track": "AI & Machine Learning",
+          "names": "Mr. Harish Kumar JR; Mr. Donald Johnson; Mr. Nilanjan Mukherjee",
+          "phones": [
+            "9945575205",
+            "8667023141",
+            "8582880139"
+          ]
+        },
+        {
+          "track": "Automotive Cybersecurity",
+          "names": "Ms. Ramya; Mr. Advait; Mr. Balaji",
+          "phones": [
+            "7338824114",
+            "7798988205",
+            "8074150472"
+          ]
+        },
+        {
+          "track": "Electric & Hybrid Vehicles",
+          "names": "Mr. Sameer Gupta; Mr. P. Jayvardhan",
+          "phones": [
+            "9975545741",
+            "8886097055"
+          ]
+        },
+        {
+          "track": "Automotive & Allied Domain",
+          "names": "Mr. Glynn John; Mr. P. Jayvardhan",
+          "phones": [
+            "8681929774",
+            "8886097055"
+          ]
+        },
+        {
+          "track": "Software-Defined Vehicles",
+          "names": "Mr. S. Raghuraman; Mr. Sivaramakrishna",
+          "phones": [
+            "8939080025",
+            "8056448976"
+          ]
+        },
+        {
+          "track": "Automotive Embedded Systems",
+          "names": "Mr. Satisha; Ms. Druthi",
+          "phones": [
+            "9448109798",
+            "7036489878"
+          ]
+        },
+        {
+          "track": "Automotive Communication",
+          "names": "Mr. Kranthi Kumar Palavalasa; Mr. Naveen Kanuri",
+          "phones": [
+            "8951157158",
+            "8096375215"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "paper",
+      "icon": "article",
+      "title": "Paper Presentation",
+      "text": "Present a paper under any of the eight AUTOwn'26 tracks.",
+      "partner": "",
+      "fee": "₹1,000 per team",
+      "team": true,
+      "category": "Presentation",
+      "track_coordinators": [
+        {
+          "track": "Autonomous Systems",
+          "names": "Mr. Aditya Balu; Mr. Ariful Mashud; Ms. Lakshmi Prasanna",
+          "phones": [
+            "8638096653",
+            "8179576005"
+          ]
+        },
+        {
+          "track": "AI & Machine Learning",
+          "names": "Mr. Harish Kumar JR; Mr. Donald Johnson; Mr. Nilanjan Mukherjee",
+          "phones": [
+            "9945575205",
+            "8667023141",
+            "8582880139"
+          ]
+        },
+        {
+          "track": "Automotive Cybersecurity",
+          "names": "Ms. Ramya; Mr. Advait; Mr. Balaji",
+          "phones": [
+            "7338824114",
+            "7798988205",
+            "8074150472"
+          ]
+        },
+        {
+          "track": "Electric & Hybrid Vehicles",
+          "names": "Mr. Sameer Gupta; Mr. P. Jayvardhan",
+          "phones": [
+            "9975545741",
+            "8886097055"
+          ]
+        },
+        {
+          "track": "Automotive & Allied Domain",
+          "names": "Mr. Glynn John; Mr. P. Jayvardhan",
+          "phones": [
+            "8681929774",
+            "8886097055"
+          ]
+        },
+        {
+          "track": "Software-Defined Vehicles",
+          "names": "Mr. S. Raghuraman; Mr. Sivaramakrishna",
+          "phones": [
+            "8939080025",
+            "8056448976"
+          ]
+        },
+        {
+          "track": "Automotive Embedded Systems",
+          "names": "Mr. Satisha; Ms. Druthi",
+          "phones": [
+            "9448109798",
+            "7036489878"
+          ]
+        },
+        {
+          "track": "Automotive Communication",
+          "names": "Mr. Kranthi Kumar Palavalasa; Mr. Naveen Kanuri",
+          "phones": [
+            "8951157158",
+            "8096375215"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ws-drone",
+      "icon": "flight",
+      "title": "Drone / Autonomous Systems Workshop",
+      "text": "Introduction to drone systems, sensing, navigation, flight control, and autonomous applications.",
+      "partner": "Proposed association with TiHAN",
+      "fee": "₹500 per participant",
+      "team": false,
+      "category": "Workshop",
+      "coordinators": [
+        {
+          "names": "Mr. Goutham",
+          "phones": [
+            "9951696086"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ws-cyber",
+      "icon": "shield",
+      "title": "Automotive Cybersecurity Workshop",
+      "text": "Threat modelling and security approaches for ECUs, in-vehicle networks, and connected vehicles.",
+      "partner": "Proposed association with Bosch",
+      "fee": "₹500 per participant",
+      "team": false,
+      "category": "Workshop",
+      "coordinators": [
+        {
+          "names": "Ms. Ramya",
+          "phones": [
+            "7338824114"
+          ]
+        }
+      ]
+    }
+  ],
+  "registration": {
+    "_help": "Paste your Zoho Backstage links here. 'zoho_event_url' is used for every option whose own 'zoho_url' is empty. Payment: put your payment link in 'payment_url' (used by all paid options), or in an option's own 'payment_url' if each fee has its own link. Paid options with a payment link show two steps: 1. Pay now, 2. Continue to register. Free options (fee starting with 'Free') skip the payment step. 'payment_order': 'register_first' = register on Zoho, then pay; 'pay_first' = pay, then register.",
+    "zoho_event_url": "https://autown-25.zohobackstage.in/AUTOWN26#/tickets?lang=en",
+    "payment_url": "",
+    "payment_order": "pay_first",
+    "payment_note": "Keep your transaction / reference number. You will enter it in the registration form.",
+    "payment_note_after": "Use the same name and email as your registration, and mention your registration ID in the payment remarks.",
+    "after_note": "",
+    "tabs": [
+      {
+        "id": "competitions",
+        "label": "Competitions",
+        "icon": "emoji_events",
+        "prompt": "Choose a competition or presentation",
+        "options": [
+          {
+            "id": "minicar",
+            "label": "Autonomous Mini Car Racing",
+            "fee": "₹1,500 per team",
+            "zoho_url": "",
+            "payment_url": "https://u.payu.in/PAYUMN/yIgPd9PwKftl"
+          },
+          {
+            "id": "hackathon",
+            "label": "Embedded Systems Hackathon",
+            "fee": "₹1,500 per team",
+            "zoho_url": "",
+            "payment_url": "https://u.payu.in/PAYUMN/yIgPd9PwKftl"
+          },
+          {
+            "id": "ctf",
+            "label": "HackArena CTF: Capture the Flag",
+            "fee": "₹1,500 per team",
+            "zoho_url": "",
+            "payment_url": "https://u.payu.in/PAYUMN/yIgPd9PwKftl"
+          },
+          {
+            "id": "vr",
+            "label": "VR Simulator for Autonomous Vehicles",
+            "fee": "₹1,500 per team",
+            "zoho_url": "",
+            "payment_url": "https://u.payu.in/PAYUMN/yIgPd9PwKftl"
+          },
+          {
+            "id": "project",
+            "label": "Project & Poster Presentation",
+            "fee": "₹1,000 per team",
+            "zoho_url": "",
+            "sub": {
+              "label": "Track",
+              "options": [
+                "Autonomous Systems",
+                "AI & Machine Learning",
+                "Automotive Cybersecurity",
+                "Electric & Hybrid Vehicles",
+                "Automotive & Allied Domain",
+                "Software-Defined Vehicles",
+                "Automotive Embedded Systems",
+                "Automotive Communication"
+              ]
+            },
+            "payment_url": "https://u.payu.in/PAYUMN/LrkhIG0eKX6n"
+          },
+          {
+            "id": "paper",
+            "label": "Paper Presentation",
+            "fee": "₹1,000 per team",
+            "zoho_url": "",
+            "sub": {
+              "label": "Track",
+              "options": [
+                "Autonomous Systems",
+                "AI & Machine Learning",
+                "Automotive Cybersecurity",
+                "Electric & Hybrid Vehicles",
+                "Automotive & Allied Domain",
+                "Software-Defined Vehicles",
+                "Automotive Embedded Systems",
+                "Automotive Communication"
+              ]
+            },
+            "payment_url": "https://u.payu.in/PAYUMN/LrkhIG0eKX6n"
+          }
+        ]
+      },
+      {
+        "id": "workshops",
+        "label": "Workshop",
+        "icon": "construction",
+        "prompt": "Choose a workshop",
+        "options": [
+          {
+            "id": "ws-drone",
+            "label": "Drone / Autonomous Systems Workshop",
+            "fee": "₹500 per participant",
+            "zoho_url": "",
+            "payment_url": "https://u.payu.in/PAYUMN/KrWLVogxTw8Z"
+          },
+          {
+            "id": "ws-cyber",
+            "label": "Automotive Cybersecurity Workshop",
+            "fee": "₹500 per participant",
+            "zoho_url": "",
+            "payment_url": "https://u.payu.in/PAYUMN/KrWLVogxTw8Z"
+          }
+        ]
+      },
+      {
+        "id": "attendee",
+        "label": "Attendee",
+        "icon": "badge",
+        "prompt": "I am attending as",
+        "options": [
+          {
+            "id": "att-student",
+            "label": "Student",
+            "fee": "Free",
+            "zoho_url": ""
+          },
+          {
+            "id": "att-academic",
+            "label": "Academician / Researcher",
+            "fee": "Free",
+            "zoho_url": ""
+          },
+          {
+            "id": "att-industry",
+            "label": "Industry Professional",
+            "fee": "Free",
+            "zoho_url": ""
+          },
+          {
+            "id": "att-startup",
+            "label": "Startup / Innovator",
+            "fee": "Free",
+            "zoho_url": ""
+          }
+        ]
+      }
+    ]
+  },
+  "speakers": [
+    {
+      "name": "Speaker to be announced",
+      "role": "Industry Expert Talk",
+      "org": "",
+      "photo": "",
+      "link": ""
+    },
+    {
+      "name": "Speaker to be announced",
+      "role": "Industry Expert Talk",
+      "org": "",
+      "photo": "",
+      "link": ""
+    },
+    {
+      "name": "Speaker to be announced",
+      "role": "Technical Session",
+      "org": "",
+      "photo": "",
+      "link": ""
+    },
+    {
+      "name": "Speaker to be announced",
+      "role": "Technical Session",
+      "org": "",
+      "photo": "",
+      "link": ""
+    }
+  ],
+  "schedule": [
+    {
+      "day": "Pre-Event",
+      "date": "Fri, 12 Feb 2027",
+      "items": [
+        {
+          "time": "Full day",
+          "title": "Pre-event technical workshops",
+          "type": "workshop"
+        }
+      ]
+    },
+    {
+      "day": "Day 1",
+      "date": "Sat, 13 Feb 2027",
+      "items": [
+        {
+          "time": "09:30 – 10:00",
+          "title": "Inauguration and welcome",
+          "type": "ceremony"
+        },
+        {
+          "time": "10:00 – 13:00",
+          "title": "Industry expert talks / technical sessions",
+          "type": "talk"
+        },
+        {
+          "time": "13:00 – 14:30",
+          "title": "Lunch and networking",
+          "type": "break"
+        },
+        {
+          "time": "14:30 – 16:30",
+          "title": "Panel Discussion / Talks / Technical Activities",
+          "type": "talk"
+        },
+        {
+          "time": "16:45 – 18:00",
+          "title": "Project and paper presentations / technical demonstrations",
+          "type": "presentation"
+        }
+      ]
+    },
+    {
+      "day": "Day 2",
+      "date": "Sun, 14 Feb 2027",
+      "items": [
+        {
+          "time": "09:30 – 10:30",
+          "title": "Opening announcements / partner or sponsor session",
+          "type": "talk"
+        },
+        {
+          "time": "10:30 – 13:00",
+          "title": "Competitions and project showcases",
+          "type": "competition"
+        },
+        {
+          "time": "13:00 – 14:30",
+          "title": "Lunch and networking",
+          "type": "break"
+        },
+        {
+          "time": "14:30 – 16:30",
+          "title": "Panel Discussion / Talks / Technical Activities",
+          "type": "talk"
+        },
+        {
+          "time": "17:00",
+          "title": "Awards, valedictory and closing",
+          "type": "ceremony"
+        }
+      ]
+    }
+  ],
+  "sponsorship": {
+    "tagline": "Put your brand in front of the future of smart mobility.",
+    "tiers": [
+      {
+        "name": "Bronze",
+        "price": "₹75,000",
+        "color": "#CD7F32",
+        "perks": [
+          "Logo on website",
+          "Mention in brochure"
+        ]
+      },
+      {
+        "name": "Silver",
+        "price": "₹1,00,000",
+        "color": "#8A94A6",
+        "perks": [
+          "All Bronze perks",
+          "Stall space",
+          "Social media shout-out"
+        ]
+      },
+      {
+        "name": "Gold",
+        "price": "₹2,00,000",
+        "color": "#FBBA16",
+        "perks": [
+          "All Silver perks",
+          "Speaking slot",
+          "Logo on banners"
+        ]
+      },
+      {
+        "name": "Platinum",
+        "price": "₹3,00,000",
+        "color": "#75C1E3",
+        "perks": [
+          "All Gold perks",
+          "Title branding",
+          "Keynote slot",
+          "Prize sponsorship"
+        ]
+      }
+    ]
+  },
+  "coordinators": [
+    {
+      "name": "Prof. Rakesh Chandra Dash",
+      "role": "Coordinator",
+      "phone": "8249073596"
+    },
+    {
+      "name": "Prof. Niranjan Raj",
+      "role": "Coordinator",
+      "phone": "8256916189"
+    }
+  ],
+  "venue": {
+    "name": "BITS Pilani, Hyderabad Campus",
+    "address": "Jawahar Nagar, Kapra Mandal, Medchal District, Hyderabad, Telangana 500078",
+    "map_url": "https://maps.google.com/?q=BITS+Pilani+Hyderabad+Campus"
+  },
+  "faqs": [
+    {
+      "q": "Who should attend?",
+      "a": "Engineering students and teams, researchers, academicians, working professionals, automotive and embedded engineers, cybersecurity practitioners, AI/ML developers, robotics enthusiasts, startups, and innovators working in automotive and allied domains."
+    },
+    {
+      "q": "What are the registration fees?",
+      "a": "Competitions: ₹1,500 per team. Project and Paper Presentations: ₹1,000 per team. Workshops: ₹500 per individual participant. Attendees: free."
+    },
+    {
+      "q": "Which tracks can I submit a project or paper under?",
+      "a": "Autonomous Systems, AI & Machine Learning, Automotive Cybersecurity, Electric & Hybrid Vehicles, Automotive & Allied Domain, Software-Defined Vehicles, Automotive Embedded Systems, and Automotive Communication. Detailed submission guidelines will be issued separately."
+    },
+    {
+      "q": "When are the workshops?",
+      "a": "Pre-event technical workshops are on Friday, 12 February 2027, with further workshops on both main event days."
+    },
+    {
+      "q": "How do I register?",
+      "a": "Click Register, pick Competitions, Workshop or Attendee, choose your event, then click Continue to complete your registration. Attendee registration is free."
+    },
+    {
+      "q": "Whom do I contact for questions?",
+      "a": "Write to bitswilpautown@wilp.bits-pilani.ac.in or call the coordinators, Prof. Rakesh Chandra Dash (8249073596) and Prof. Niranjan Raj (8256916189). Each competition, workshop and presentation track also lists its own coordinators in the Events section."
+    }
+  ],
+  "gallery": {
+    "title": "Moments from the previous AUTOwn",
+    "_help": "Photos live in assets/images/gallery/. Add or remove entries here to change the slideshow.",
+    "images": [
+      {
+        "file": "gallery_autown25_group.jpg",
+        "caption": "AUTOwn'25 participants, organisers and faculty"
+      },
+      {
+        "file": "gallery_01.jpg",
+        "caption": "Participants and organisers at AUTOwn"
+      },
+      {
+        "file": "gallery_02.jpg",
+        "caption": "Closing ceremony"
+      },
+      {
+        "file": "gallery_03.jpg",
+        "caption": "Keynote address"
+      },
+      {
+        "file": "gallery_04.jpg",
+        "caption": "Panel discussion on automotive technology"
+      },
+      {
+        "file": "gallery_05.jpg",
+        "caption": "Students presenting their work"
+      },
+      {
+        "file": "gallery_06.jpg",
+        "caption": "Interaction at the exhibition"
+      },
+      {
+        "file": "gallery_07.jpg",
+        "caption": "Attendees exploring smart-mobility exhibits"
+      },
+      {
+        "file": "gallery_08.jpg",
+        "caption": "Hands-on workshop session"
+      },
+      {
+        "file": "gallery_09.jpg",
+        "caption": "Interactive learning session"
+      },
+      {
+        "file": "gallery_10.jpg",
+        "caption": "AI and mobility workshop"
+      }
+    ]
+  }
+}
