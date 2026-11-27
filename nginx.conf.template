@@ -4,13 +4,18 @@ server {
     root /usr/share/nginx/html;
     index index.html;
 
+    # Don't reveal the nginx version in headers or error pages
+    server_tokens off;
+
     # Single-page app: unknown paths load the Flutter app
     location / {
+        include /etc/nginx/snippets/security-headers.conf;
         try_files $uri $uri/ /index.html;
     }
 
     # Always fetch the newest app shell and content after a deploy
     location ~* (index\.html|flutter_bootstrap\.js|flutter_service_worker\.js|content\.json)$ {
+        include /etc/nginx/snippets/security-headers.conf;
         add_header Cache-Control "no-cache";
     }
 
