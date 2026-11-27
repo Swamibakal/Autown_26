@@ -50,11 +50,11 @@
       },
       {
         "icon": "sports_motorsports",
-        "text": "Technical competitions: Autonomous Mini Car Racing, Embedded Systems Hackathon, HackArena CTF and VR Simulator for Autonomous Vehicles."
+        "text": "Technical competitions: Autonomous Mini Car Racing, Embedded Systems Hackathon, HackArena – Joint Online Cybersecurity Innovation Challenge and VR Simulator for Autonomous Vehicles."
       },
       {
         "icon": "construction",
-        "text": "Proposed technical workshops in autonomous systems, automotive cybersecurity, robotics, AUTOSAR/automotive software, and model-based design."
+        "text": "Proposed technical workshops in autonomous systems, automotive cybersecurity, robotics, AUTOSAR/automotive software, and model-based design, in collaboration with Bosch."
       },
       {
         "icon": "emoji_events",
@@ -192,9 +192,9 @@
     {
       "id": "ctf",
       "icon": "flag",
-      "title": "HackArena CTF: Capture the Flag",
+      "title": "HackArena – Joint Online Cybersecurity Innovation Challenge",
       "text": "Solve cybersecurity challenges involving areas such as network security, cryptography, vulnerability analysis, and secure systems in an authorised environment.",
-      "partner": "In collaboration with ARAI",
+      "partner": "In collaboration with Automotive Research Association of India (ARAI)",
       "fee": "₹1,500 per team",
       "team": true,
       "category": "Competition",
@@ -422,7 +422,7 @@
       "icon": "shield",
       "title": "Automotive Cybersecurity Workshop",
       "text": "Threat modelling and security approaches for ECUs, in-vehicle networks, and connected vehicles.",
-      "partner": "Proposed association with Bosch",
+      "partner": "In collaboration with Bosch",
       "fee": "₹500 per participant",
       "team": false,
       "category": "Workshop",
@@ -468,7 +468,7 @@
           },
           {
             "id": "ctf",
-            "label": "HackArena CTF: Capture the Flag",
+            "label": "HackArena – Joint Online Cybersecurity Innovation Challenge",
             "fee": "₹1,500 per team",
             "zoho_url": "",
             "payment_url": "https://u.payu.in/PAYUMN/yIgPd9PwKftl"
